@@ -20,4 +20,9 @@ class Made extends Model
         return $this->hasMany(Mould::class);
     }
 
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'made_id');
+    }
+
 }

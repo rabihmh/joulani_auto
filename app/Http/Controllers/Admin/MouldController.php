@@ -78,7 +78,6 @@ class MouldController extends Controller
     public function forceDelete($id)
     {
         $mould = Mould::onlyTrashed()->findOrFail($id);
-        $maid_id = $mould->maid_id;
         $mould->forceDelete();
         return redirect()->route('admin.mades.show', $mould->made_id)->with('success', 'تم الحذف نهائيا');
     }
@@ -86,6 +85,6 @@ class MouldController extends Controller
     public function getMouldsById($id)
     {
         $made = Made::findOrFail($id);
-        return response()->json(['data' => $made['moulds']]);
+        return response()->json($made['moulds']);
     }
 }

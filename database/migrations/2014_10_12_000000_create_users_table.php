@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('user_type', ['buyer', 'seller'])->default('buyer');
+            $table->string('phone');
             $table->rememberToken();
             $table->timestamps();
         });

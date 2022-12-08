@@ -12,4 +12,9 @@ class Vehicle extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function extras(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Extra::class, 'vehicle_id');
+    }
 }

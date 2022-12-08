@@ -21,4 +21,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard'], function () {
     Route::get('vehicles/create', [VehiclesController::class, 'create'])->name('vehicles.create');
     Route::post('vehicles/store', [VehiclesController::class, 'store'])->name('vehicles.store');
     Route::resource('mades', MadeController::class);
+
+    Route::POST('uploadsImage', [VehiclesController::class, 'uploadImage'])->name('upload');
 });
