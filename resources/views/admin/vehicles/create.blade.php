@@ -11,11 +11,11 @@
 @endsection
 @section('content')
     <div class="container mt-1 mb-5">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li class="alert alert-danger">{{$error}}</li>
-            @endforeach
-        </ul>
+{{--        <ul>--}}
+{{--            @foreach($errors->all() as $error)--}}
+{{--                <li class="alert alert-danger">{{$error}}</li>--}}
+{{--            @endforeach--}}
+{{--        </ul>--}}
         <form method="POST" action="{{route('admin.vehicles.store')}}">
             @csrf
             <div class="row">
@@ -176,6 +176,7 @@
                             <div data-id="gaz" class="  fuelType btn btn-outline-secondary btn-sm mb-2">غاز</div>
                             <div data-id="elec" class="  fuelType btn btn-outline-secondary btn-sm mb-2">كهرباء</div>
                         </div>
+                        <x-error name="fuel"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -192,6 +193,7 @@
                             <div data-id="sau" class="  gearType btn btn-outline-secondary btn-sm mb-2">نصف أوتماتيك
                             </div>
                         </div>
+                        <x-error name="gear"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -209,7 +211,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <input name="payment_method" value="" hidden  type="text" id="payment_method">
+                            <input name="payment_method" value="" hidden type="text" id="payment_method">
                             <div data-id="payment_method_types_pay1"
                                  class=" payment_method btn btn-outline-secondary btn-sm mb-2">
                                 كاش
@@ -227,6 +229,7 @@
                                 دفعة أولى + شيكات
                             </div>
                         </div>
+                        <x-error name="payment_method"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -248,6 +251,7 @@
                             <div data-id="s7" class=" numSeats btn btn-outline-secondary btn-sm mb-2">8+1</div>
                             <div data-id="s8" class=" numSeats btn btn-outline-secondary btn-sm mb-2">9+1</div>
                         </div>
+                        <x-error name="num_of_seats"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -262,6 +266,7 @@
                             <div data-id="new" class=" vehicleStatus btn btn-outline-secondary btn-sm mb-2">جديد</div>
                             <div data-id="usd" class=" vehicleStatus btn btn-outline-secondary btn-sm mb-2">مستعمل</div>
                         </div>
+                        <x-error name="vehicle_status"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -278,6 +283,7 @@
                             <div data-id="tbf" class="  drivetrain_system btn btn-outline-secondary btn-sm mb-2">2*4
                             </div>
                         </div>
+                        <x-error name="drivetrain_system"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -291,6 +297,7 @@
                             <input class="form-control" placeholder="عدد الأحصنة" type="number" pattern="\d*" name="hp"
                                    value="">
                         </div>
+                        <x-error name="hp"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -305,6 +312,7 @@
                                    placeholder="قوة المحرك"
                                    name="power">
                         </div>
+                        <x-error name="power"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -318,6 +326,7 @@
                             <input type="number" pattern="\d*" value="" class="form-control mb-1"
                                    placeholder="المسافة المقطوعة" name="mileage">
                         </div>
+                        <x-error name="mileage"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -337,6 +346,8 @@
                                 @endphp
                             </select>
                         </div>
+                        <x-error name="year_of_product"/>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
@@ -351,6 +362,7 @@
                             <input type="number" pattern="\d*" value="" min="20000" step="1" class="form-control mb-1"
                                    placeholder="السعر" name="price">
                         </div>
+                        <x-error name="price"/>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -371,6 +383,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <x-error name="body_color"/>
                             </div>
                             <div class="col-6">
                                 <div class="card-body mb-4">
@@ -383,6 +396,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <x-error name="interior_color"/>
                             </div>
                         </div>
                     </div>
@@ -1374,7 +1388,7 @@
                             headers: {
                                 'X-CSRF-TOKEN': "{{csrf_token()}}"
                             },
-                            url: "{{route('admin.upload')}}",
+                            url: "{{route('upload')}}",
                             method: "POST",
                             data: form_data,
                             contentType: false,

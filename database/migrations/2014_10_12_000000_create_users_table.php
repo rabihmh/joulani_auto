@@ -16,10 +16,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('user_type', ['buyer', 'seller'])->default('buyer');
-            $table->string('phone');
+            $table->enum('user_type',['buyer', 'seller'])->default('buyer');
             $table->rememberToken();
             $table->timestamps();
         });

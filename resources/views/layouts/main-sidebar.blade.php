@@ -19,8 +19,10 @@
                         class="avatar-status profile-status bg-green"></span>
                 </div>
                 <div class="user-info">
-                    <h4 class="font-weight-semibold mt-3 mb-0">Petey Cruiser</h4>
-                    <span class="mb-0 text-muted">Premium Member</span>
+                    @auth('admin')
+                        <h4 class="font-weight-semibold mt-3 mb-0">{{Auth::guard('admin')->user()->name}}</h4>
+                        <span class="mb-0 text-muted">{{Auth::guard('admin')->user()->type}}</span>
+                    @endauth
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('admin.mades.store')}}" method="post">
+                    <form action="{{route('admin.mades.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-9 col-md-8 form-group mg-b-0">
@@ -30,7 +30,15 @@
                                 <p class="text-danger mt-2">{{$message}}</p>
                                 @enderror
                             </div>
-                            <div class="col-lg-3 col-md-4 mg-t-10 mg-sm-t-25">
+                            <div class="col-lg-9 col-md-8 form-group mg-b-0">
+                                <label class="form-label">Made image: <span class="tx-danger">*</span></label>
+                                <input class="form-control" name="image" type="file">
+                                @error('image')
+                                <p class="text-danger mt-2">{{$message}}</p>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-12 col-md-4 mg-t-10 mg-sm-t-25">
                                 <button class="btn btn-main-primary pd-x-20" type="submit">Add</button>
                             </div>
                         </div>

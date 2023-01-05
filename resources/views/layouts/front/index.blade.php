@@ -68,12 +68,12 @@
     <header id="header">
         <div class="container">
             <nav id="nav">
-                <a href="https://www.autoanddrive.com" class="">الرئيسية</a>
+                <a href="https://www.autoanddrive.com" class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
                 <a href="https://www.autoanddrive.com/vehicles" class="">البحث</a>
                 <a href="https://www.autoanddrive.com/get_app" class="">تحميل التطبيق</a>
                 <a href="https://www.autoanddrive.com/seller" class="">معارض السيارات</a>
                 <a href="https://www.autoanddrive.com/contact" class="">إتصل بنا</a>
-                <a href="https://www.autoanddrive.com/contact" class="">تسجيل الدخول</a>
+                <a href="{{route('login')}}" class="">تسجيل الدخول</a>
                 {{--                <a href="https://www.autoanddrive.com/add" class=" active ">إضافة مركبة</a>--}}
                 {{--                <a href="https://www.autoanddrive.com/userdashboard" class="">حسابي</a>--}}
                 {{--                <a href="https://www.autoanddrive.com/admin/logout"--}}

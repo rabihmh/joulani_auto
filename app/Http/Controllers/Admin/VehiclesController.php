@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleRequest;
 use App\Models\Made;
 use App\Models\Vehicle;
+use App\Services\VehicleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,7 @@ class VehiclesController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VehicleRequest $request)
+    public function store(VehicleRequest $request, VehicleService $vehicleService)
     {
 //        $arry = [
 //            "make_id" => null,
@@ -77,11 +78,9 @@ class VehiclesController extends Controller
 //            "_token" => "PqkGPhj5NIzH1VbXxrkYSew665EKPNciTF1ZRp9b",
 //        ];
 //        return json_encode($arry);
-
-        // return $request->all();
         $request->merge(['price_type' => 'unknown']);
-        return Vehicle::create($request->all());
-
+        $vehicleService->create($request->all());
+        return redirect('/')->with('success', 'تم اضافة السيارة بنجاح');
     }
 
     /**
@@ -129,15 +128,5 @@ class VehiclesController extends Controller
         //
     }
 
-    public function uploadImage(Request $request)
-    {
-        $data = [];
-        foreach ($request->file('file') as $file) {
-            //$ext = $file->getClientOriginalExtension();
-            $img = $file->store('uploads', 'public');
-//            array_push($data, $img);
-            $data[] = $img;
-        }
-        return $data;
-    }
+
 }

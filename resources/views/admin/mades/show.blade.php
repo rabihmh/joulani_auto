@@ -80,7 +80,7 @@
                         </table>
                     </div><!-- bd -->
                 </div><!-- bd -->
-            </div><!-- bd -->
+            </div>
         </div>
 
     </div>

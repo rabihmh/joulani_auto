@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\MouldController;
 use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MadeController;
+Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => 'auth:admin'], function () {
+    Route::view('/', 'admin.index')->name('home');
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard'], function () {
     Route::get('mades/trash', [MadeController::class, 'trash'])->name('mades.trash');
     Route::put('mades/{made}/restore', [MadeController::class, 'restore'])->name('mades.restore');
     Route::delete('mades/{made}/force-delete', [MadeController::class, 'forceDelete'])->name('mades.force-delete');
@@ -22,5 +23,4 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard'], function () {
     Route::post('vehicles/store', [VehiclesController::class, 'store'])->name('vehicles.store');
     Route::resource('mades', MadeController::class);
 
-    Route::POST('uploadsImage', [VehiclesController::class, 'uploadImage'])->name('upload');
 });

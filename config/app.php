@@ -185,6 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\FortifyServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /*

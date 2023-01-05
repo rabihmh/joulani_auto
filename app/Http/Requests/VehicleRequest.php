@@ -42,7 +42,21 @@ class VehicleRequest extends FormRequest
             'num_of_keys' => 'required',
             'year_of_product' => 'required',
             'oimg' => 'required',
-
+            'ext_int_furniture' => 'nullable',
+            'ext_int_sunroof' => 'nullable',
+            'ext_int_glass' => 'nullable',
+            'ext_int_seats' => 'nullable',
+            'ext_int_screens' => 'nullable',
+            'ext_int_other' => 'nullable',
+            'ext_int_steering' => 'nullable',
+            'ext_ext_light' => 'nullable',
+            'ext_ext_mirrors' => 'nullable',
+            'ext_ext_rims' => 'nullable',
+            'ext_ext_sensors' => 'nullable',
+            'ext_ext_cameras' => 'nullable',
+            'ext_ext_other' => 'nullable',
+            'ext_gen_other' => 'nullable',
+            //'optradio' => '1'
         ];
     }
 

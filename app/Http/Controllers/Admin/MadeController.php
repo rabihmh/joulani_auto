@@ -39,11 +39,21 @@ class MadeController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3',
+            'image' => 'required|image'
         ]);
         $request->merge(['slug' => Str::slug($request->name)]);
-        Made::create($request->all());
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $image = $file->storeAs('uploads/mades/', $request->post('slug') . '.' . $ext, ['disk' => 'public']);
+            $data['image'] = $image;
+        }
+
+        Made::create($data);
         return redirect()->route('admin.mades.index')->with('success', 'تم الاضافة بنجاح');
     }
 

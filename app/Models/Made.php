@@ -12,7 +12,7 @@ class Made extends Model
 
     protected $table = 'mades';
     protected $fillable = [
-        'name', 'slug'
+        'name', 'slug', 'image'
     ];
 
     public function moulds()

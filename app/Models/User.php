@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'user_type'
     ];
 
     /**
@@ -41,4 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function seller()
+    {
+        if ($this->user_type === "seller") {
+            return $this->hasOne(Seller::class, 'user_id');
+        }
+        return null;
+    }
+//    public function seller()
+//    {
+//        return $this->hasOne(Seller::class)->where('user_type','seller');
+//    }
 }
