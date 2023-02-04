@@ -10,33 +10,18 @@ use Illuminate\Support\Str;
 
 class MadeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function index()
     {
         $mades = Made::paginate();
         return view('admin.mades.index', compact('mades'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function create()
     {
         return view('admin.mades.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function store(Request $request)
     {
 
@@ -57,38 +42,21 @@ class MadeController extends Controller
         return redirect()->route('admin.mades.index')->with('success', 'تم الاضافة بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function show($id)
     {
-        $made = Made::with('moulds')->findorFail($id);
+        $made = Made::with(['moulds' => function ($q) {
+            $q->orderby('slug', 'asc');
+        }])->findorFail($id);
 
         return view('admin.mades.show', compact('made'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function edit($id)
     {
         $made = Made::findOrFail($id);
         return view('admin.mades.edit', compact('made'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -101,12 +69,6 @@ class MadeController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
         $made = Made::findOrFail($id);

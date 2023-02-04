@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Admin - Moulds
+@endsection
 @section('css')
 @endsection
 

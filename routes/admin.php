@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\MouldController;
 use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MadeController;
+
+
 Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => 'auth:admin'], function () {
     Route::view('/', 'admin.index')->name('home');
 
@@ -18,9 +20,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => '
     Route::get('moulds/trash', [MouldController::class, 'trash'])->name('moulds.trash');
     Route::put('moulds/{mould}/restore', [MouldController::class, 'restore'])->name('moulds.restore');
     Route::delete('moulds/{mould}/force-delete', [MouldController::class, 'forceDelete'])->name('moulds.force-delete');
-    Route::get('made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');
-    Route::get('vehicles/create', [VehiclesController::class, 'create'])->name('vehicles.create');
-    Route::post('vehicles/store', [VehiclesController::class, 'store'])->name('vehicles.store');
     Route::resource('mades', MadeController::class);
-
+    Route::resource('vehicles', VehiclesController::class);
+    Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);
 });
+Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');

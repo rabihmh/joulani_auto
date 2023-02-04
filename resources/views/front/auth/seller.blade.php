@@ -1,16 +1,13 @@
-@extends('layouts.front.index')
-@section('content')
-    <div class="breadcrumbs pt-2" xmlns:v="http://rdf.data-vocabulary.org/#">
+<x-front title="انشاء حساب تاجر">
+    <x-slot:bradcrumbs>
         <div class="container">
-        <span typeof="v:Breadcrumb"
-        ><a property="v:title" rel="v:url" href="/">الرئيسية</a></span
-        >
+            <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="/">الرئيسية</a></span>
             <span class="sep">»</span>
-            <span typeof="v:Breadcrumb"
-            ><span property="v:title" class="current"> إنشاء حساب معرض </span>
-        </span>
+            <span typeof="v:Breadcrumb">
+                <span property="v:title" class="current">إنشاء حساب معرض</span>
+            </span>
         </div>
-    </div>
+    </x-slot:bradcrumbs>
     <div class="container">
         @if($errors)
             @foreach($errors->all() as $error)
@@ -27,12 +24,12 @@
                     <input type="hidden" value="seller" name="register">
                     <div class="table-responsive">
                         <table class="table table-bordered">
-{{--                            <tr>--}}
-{{--                                <td colspan="2">--}}
-{{--                                    <a href="#" onclick="getLocation()">Try It</a>--}}
-{{--                                    <p id="demo"></p>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
+                            {{--                            <tr>--}}
+                            {{--                                <td colspan="2">--}}
+                            {{--                                    <a href="#" onclick="getLocation()">Try It</a>--}}
+                            {{--                                    <p id="demo"></p>--}}
+                            {{--                                </td>--}}
+                            {{--                            </tr>--}}
                             <tr>
                                 <td>إسم المعرض</td>
                                 <td>
@@ -150,7 +147,8 @@
                                     <div id="success">
                                         <label></label>
                                         <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%"
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                 style="width: 0%"
                                                  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
@@ -174,84 +172,83 @@
             </div>
         </div>
     </div>
+    @push('js')
+        <script>
+            // uploadFile();
+            $('#file').change(function () {
+                var error_images = '';
+                var form_data = new FormData();
+                var files = $('#file')[0].files;
 
-@endsection
-@section('js')
-<script>
-    // uploadFile();
-    $('#file').change(function () {
-        var error_images = '';
-        var form_data = new FormData();
-        var files = $('#file')[0].files;
-
-            for (var i = 0; i < files.length; i++) {
-                var name = document.getElementById("file").files[0].name;
-                var ext = name.split('.').pop().toLowerCase();
-                if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) === -1) {
-                    error_images += '<p>Invalid ' + i + ' File</p>';
-                }
-                var oFReader = new FileReader();
-                oFReader.readAsDataURL(document.getElementById("file").files[i]);
-                var f = document.getElementById("file").files[i];
-                var fsize = f.size || f.fileSize;
-                if (fsize > 4000000) {
-                    error_images += '<p>' + i + ' حجم الصورة كبيرة جدا</p>';
-                } else {
-                    form_data.append("file[]", document.getElementById('file').files[i]);
-                }
-            }
-
-            if (error_images === '') {
-                $('file').hide();
-                $.ajax({
-                    xhr: function () {
-                        var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function (evt) {
-                            if (evt.lengthComputable) {
-                                var percentComplete = ((evt.loaded / evt.total) * 100);
-                                $(".progress-bar").width(percentComplete + '%');
-                                $(".progress-bar").html(percentComplete + '%');
-                            }
-                        }, false);
-                        return xhr;
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': "{{csrf_token()}}"
-                    },
-                    url: "{{route('upload')}}",
-                    method: "POST",
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    beforeSend: function () {
-                        $('#success label').html('' +
-                            '<div class="alert alert-success">الرجاء الإنتظار جاري تحميل الصور.....</div>');
-                    },
-                    complete: function () {
-                        $('#success label').html('');
-                    },
-
-                    success: function (data) {
-                        window.setTimeout(function () {
-                            var val = $('.oimg').val();
-                            if (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    $('#success').append('<img src="{{asset('storage')}}/' + data[i] + '" width="100" height="100" class="img-thumbnail" />');
-                                }
-                                $('.oimg').val(val + data);
-                            }
-                        }, 600);
-                        // $('.progress-bar').css('width', '0%');
+                for (var i = 0; i < files.length; i++) {
+                    var name = document.getElementById("file").files[0].name;
+                    var ext = name.split('.').pop().toLowerCase();
+                    if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) === -1) {
+                        error_images += '<p>Invalid ' + i + ' File</p>';
                     }
-                });
-            } else {
-                $('#success label').html(error_images);
-                // $('#multiple_files').val('');
-                // $('#success').html("<span class='text-danger'>" + error_images + "</span>");
-                // return false;
-            }
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(document.getElementById("file").files[i]);
+                    var f = document.getElementById("file").files[i];
+                    var fsize = f.size || f.fileSize;
+                    if (fsize > 4000000) {
+                        error_images += '<p>' + i + ' حجم الصورة كبيرة جدا</p>';
+                    } else {
+                        form_data.append("file[]", document.getElementById('file').files[i]);
+                    }
+                }
 
-    });
-</script>
-@endsection
+                if (error_images === '') {
+                    $('file').hide();
+                    $.ajax({
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = ((evt.loaded / evt.total) * 100);
+                                    $(".progress-bar").width(percentComplete + '%');
+                                    $(".progress-bar").html(percentComplete + '%');
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': "{{csrf_token()}}"
+                        },
+                        url: "{{route('upload','sellers')}}",
+                        method: "POST",
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('#success label').html('' +
+                                '<div class="alert alert-success">الرجاء الإنتظار جاري تحميل الصور.....</div>');
+                        },
+                        complete: function () {
+                            $('#success label').html('');
+                        },
+
+                        success: function (data) {
+                            window.setTimeout(function () {
+                                var val = $('.oimg').val();
+                                if (data) {
+                                    for (var i = 0; i < data.length; i++) {
+                                        $('#success').append('<img src="{{asset('storage')}}/' + data[i] + '" width="100" height="100" class="img-thumbnail" />');
+                                    }
+                                    $('.oimg').val(val + data);
+                                }
+                            }, 600);
+                            // $('.progress-bar').css('width', '0%');
+                        }
+                    });
+                } else {
+                    $('#success label').html(error_images);
+                    // $('#multiple_files').val('');
+                    // $('#success').html("<span class='text-danger'>" + error_images + "</span>");
+                    // return false;
+                }
+
+            });
+        </script>
+    @endpush
+</x-front>

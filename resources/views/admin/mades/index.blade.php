@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Admin - Mades
+@endsection
 @section('css')
 @endsection
 
@@ -16,7 +19,7 @@
 @endsection
 @section('content')
     <!-- row -->
-    <a href="{{route('admin.mades.trash')}}" class="btn btn-danger mb-4" >Trash</a>
+    <a href="{{route('admin.mades.trash')}}" class="btn btn-danger mb-4">Trash</a>
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -27,18 +30,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Image</th>
                                 <th>Created at</th>
                                 <th>Control</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @php
-                                $i=0;
-                            @endphp
                             @forelse($mades as $made)
                                 <tr>
-                                    <th scope="row">{{$i+=1}}</th>
+                                    <th scope="row">{{$loop->iteration}}</th>
                                     <td>{{$made->name}}</td>
+                                    <td><img style="width: 50px" src="{{asset("storage/{$made->image}")}}"></td>
                                     <td>{{date('d-m-Y',strtotime($made->created_at))}}</td>
                                     <td class="d-flex">
                                         <a href="{{route('admin.mades.show',$made->id)}}" class="btn btn-primary ml-4">View</a>

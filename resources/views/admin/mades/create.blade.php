@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Admin - Mades
+@endsection
 @section('css')
 @endsection
 

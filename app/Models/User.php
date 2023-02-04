@@ -51,8 +51,12 @@ class User extends Authenticatable
         }
         return null;
     }
-//    public function seller()
-//    {
-//        return $this->hasOne(Seller::class)->where('user_type','seller');
-//    }
+
+    public function vehicles()
+    {
+        if ($this->user_type === "seller") {
+            return $this->hasMany(Vehicle::class);
+        }
+        return null;
+    }
 }

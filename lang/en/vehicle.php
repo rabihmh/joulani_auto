@@ -1,0 +1,27 @@
+<?php
+return
+[
+    'man'=>'Manuel',
+    'aut'=>'Automatic',
+    'des'=>'',
+    'bin'=>'',
+    'binelec'=>'',
+    'deselec'=>'',
+    'gaz'=>'',
+    'elec'=>'',
+    's0'=>'1+1',
+    's1'=>'2+1',
+    's2'=>'3+1',
+    's3'=>'4+1',
+    's4'=>'5+1',
+    's5'=>'6+1',
+    's6'=>'7+1',
+    's7'=>'8+1',
+    's8'=>'9+1',
+    'fbf'=>'4X4',
+    'tbf'=>'4X2',
+    'payment_method_types_pay1'=>'',
+    'payment_method_types_pay2'=>'',
+    'payment_method_types_pay3'=>'',
+    'payment_method_types_pay4'=>'',
+];

@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Admin - Mades
+@endsection
 @section('css')
 @endsection
 
@@ -52,14 +55,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php
-                                $i=0;
-                            @endphp
+
                             @forelse($made->moulds as $mould)
                                 <tr>
-                                    <th scope="row">{{$i+=1}}</th>
+                                    <th scope="row">{{$loop->iteration}}</th>
                                     <td>{{$mould->name}}</td>
                                     <td>{{date('d-m-Y',strtotime($mould->created_at))}}</td>
+{{--                                    <td>{{$mould->created_at->diffForHumans(['short'=>'true'])}}</td>--}}
                                     <td class="d-flex">
                                         <a href="{{route('admin.moulds.edit',$mould->id)}}"
                                            class="btn btn-success ml-4">Edit</a>

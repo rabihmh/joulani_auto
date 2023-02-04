@@ -1,5 +1,4 @@
-@extends('layouts.front.index')
-@section('content')
+<x-front title="Login">
     <div class="container">
         <div class="card m-auto mt-5 mb-5">
             <div class="card-header bg-blue text-white">تسجيل الدخول</div>
@@ -29,4 +28,5 @@
             </div>
         </div>
     </div>
-@endsection
+
+</x-front>

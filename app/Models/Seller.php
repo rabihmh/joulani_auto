@@ -17,4 +17,9 @@ class Seller extends Model
         'seller_address',
         'image'
     ];
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'seller_id', 'id');
+    }
 }

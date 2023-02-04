@@ -1,5 +1,5 @@
-@extends('layouts.front.index')
-@section('content')
+<x-front title="Register">
+
     <div class="container">
         <div class="card m-auto mb-5">
             <div class="card-header bg-dark text-white">إنشاء حساب شخصي</div>
@@ -90,4 +90,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-front>

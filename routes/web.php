@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Front\SellerController;
+use App\Http\Controllers\Front\VehicleController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Fortify;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +16,17 @@ use Laravel\Fortify\Fortify;
 |
 */
 
-Route::get('/', function () {
-    return view('front.home');
-})->name('house');
-Route::get('/{page}', [Controller::class, 'getPage']);
-Route::view('register/seller', 'front.auth.seller')->name('register.seller')->middleware('guest');
-Route::POST('uploadsImage', [ImageController::class, 'uploadImage'])->name('upload');
-
+Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('front.home');
+Route::view('register/seller', 'front.auth.seller')->name('register.seller')->middleware('guest:web');
+Route::post('uploadsImage/{folder}', [ImageController::class, 'uploadImage'])->name('upload');
+Route::view('add/car', 'front.vehicles.create');
+Route::view('user/profile', 'front.users.userDashboard');
+Route::view('user/profile/edit', 'front.users.editProfile');
+Route::view('user/contact', 'front.users.contact');
+Route::view('user/search', 'front.vehicles.search');
+Route::view('seller/get', 'front.seller.index');
+Route::group(['middleware' => 'auth:web', 'as' => 'front.'], function () {
+    Route::resource('vehicles', VehicleController::class);
+    Route::resource('sellers', SellerController::class);
+});
 require __DIR__ . '/admin.php';

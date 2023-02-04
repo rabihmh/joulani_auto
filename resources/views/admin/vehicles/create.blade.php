@@ -11,11 +11,11 @@
 @endsection
 @section('content')
     <div class="container mt-1 mb-5">
-{{--        <ul>--}}
-{{--            @foreach($errors->all() as $error)--}}
-{{--                <li class="alert alert-danger">{{$error}}</li>--}}
-{{--            @endforeach--}}
-{{--        </ul>--}}
+        {{--        <ul>--}}
+        {{--            @foreach($errors->all() as $error)--}}
+        {{--                <li class="alert alert-danger">{{$error}}</li>--}}
+        {{--            @endforeach--}}
+        {{--        </ul>--}}
         <form method="POST" action="{{route('admin.vehicles.store')}}">
             @csrf
             <div class="row">
@@ -190,7 +190,7 @@
                             <input id="gearType" value="" name="gear" type="text" hidden/>
                             <div data-id="man" class=" gearType btn btn-outline-secondary btn-sm mb-2">عادي</div>
                             <div data-id="aut" class="  gearType btn btn-outline-secondary btn-sm mb-2">أوتماتيك</div>
-                            <div data-id="sau" class="  gearType btn btn-outline-secondary btn-sm mb-2">نصف أوتماتيك
+                            <div data-id="sau" class="  gearType btn btn-outline-secondary btn-sm mb-2">ستيبترونيك
                             </div>
                         </div>
                         <x-error name="gear"/>
@@ -838,20 +838,14 @@
                                      class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">نظام ABS
                                 </div>
                                 <div data-id="ext_gen_other_navi"
-                                     class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">نظام خوارط
+                                     class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">نظام خرائط
                                 </div>
                                 <div data-id="ext_gen_other_door"
                                      class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">أبواب شفط
                                 </div>
-                                <div data-id="ext_gen_other_main"
-                                     class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">دفتر صيانة
-                                </div>
                                 <div data-id="ext_gen_other_safe"
                                      class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">رادار قياس مسافة
                                     الأمان
-                                </div>
-                                <div data-id="ext_gen_other_serv"
-                                     class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">دفتر خدمات
                                 </div>
                                 <div data-id="ext_gen_other_crui"
                                      class="  ext_gen_other btn btn-outline-secondary btn-sm mb-2">محدد سرعة
@@ -1388,7 +1382,7 @@
                             headers: {
                                 'X-CSRF-TOKEN': "{{csrf_token()}}"
                             },
-                            url: "{{route('upload')}}",
+                            url: "{{route('upload','vehicles')}}",
                             method: "POST",
                             data: form_data,
                             contentType: false,

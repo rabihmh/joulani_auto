@@ -23,7 +23,6 @@ return new class extends Migration {
             $table->integer('mileage');
             $table->integer('price');
             $table->string('fuel');
-            $table->string('price_type')->nullable();
             $table->string('num_of_seats');
             $table->string('payment_method');
             $table->string('vehicle_status');

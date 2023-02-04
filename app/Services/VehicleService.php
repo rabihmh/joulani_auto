@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Extra;
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleService
 {
@@ -12,7 +13,8 @@ class VehicleService
         $vehicle = Vehicle::create([
             'made_id' => $vehicleData['made_id'],
             'mould_id' => $vehicleData['mould_id'],
-            'user_id' => 1,
+            'user_id' => Auth::guard('web')->id(),
+            'seller_id' => Auth::user()->seller->id,
             'fuel' => $vehicleData['fuel'],
             'gear' => $vehicleData['gear'],
             'payment_method' => $vehicleData['payment_method'],
@@ -23,7 +25,6 @@ class VehicleService
             'power' => $vehicleData['power'],
             'mileage' => $vehicleData['mileage'],
             'year_of_product' => $vehicleData['year_of_product'],
-            'price_type' => $vehicleData['price_type'],
             'price' => $vehicleData['price'],
             'body_color' => $vehicleData['body_color'],
             'interior_color' => $vehicleData['interior_color'],
