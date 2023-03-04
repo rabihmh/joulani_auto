@@ -12,11 +12,14 @@ class Mould extends Model
 
     protected $table = 'moulds';
     protected $fillable = [
-        'made_id', 'name', 'slug'
+        'made_id','parent_id', 'name', 'slug'
     ];
 
     public function made()
     {
         return $this->belongsTo(Made::class);
+    }
+    public function children(){
+        return $this->hasMany(Mould::class,'parent_id','id');
     }
 }

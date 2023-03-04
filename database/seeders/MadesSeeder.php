@@ -17,20 +17,51 @@ class MadesSeeder extends Seeder
      */
     public function run()
     {
-        $mades = Config::get('Mades');
+        $mades = Config::get('mades');
         foreach ($mades as $name => $data) {
-            $made = Made::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
-                'image' => $data['image'],
-            ]);
-            foreach ($data['moulds'] as $mould) {
+            $made = $this->createMade($name, $data['image']);
+            $this->createMoulds($made, $data['moulds']);
+        }
+    }
+
+    private function createMade(string $name, string $image): Made
+    {
+        return Made::create([
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'image' => $image,
+        ]);
+    }
+
+    private function createMoulds(Made $made, array $moulds): void
+    {
+        foreach ($moulds as $mould) {
+            if (is_array($mould)) {
+                $parent = key($mould);
+                $children = $mould[$parent];
+
+                $parentMould = Mould::create([
+                    'made_id' => $made->id,
+                    'name' => $parent,
+                    'slug' => Str::slug($parent),
+                ]);
+
+                foreach ($children as $child) {
+                    Mould::create([
+                        'made_id' => $made->id,
+                        'parent_id' => $parentMould->id,
+                        'name' => $child,
+                        'slug' => Str::slug($child),
+                    ]);
+                }
+            } else {
                 Mould::create([
                     'made_id' => $made->id,
                     'name' => $mould,
-                    'slug' => Str::slug($mould)
+                    'slug' => Str::slug($mould),
                 ]);
             }
         }
     }
+
 }

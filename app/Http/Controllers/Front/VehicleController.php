@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleRequest;
 use App\Models\Made;
+use App\Models\Mould;
 use App\Models\Vehicle;
+use App\Queries\VehicleQuery;
 use App\Services\VehicleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        //
+        $mades = Made::all();
+        $vehicles = Vehicle::query()->with(['made:id,name', 'mould:id,name'])->paginate(9);
+        return view('front.vehicles.index', compact('mades', 'vehicles'));
     }
 
     /**
@@ -29,7 +31,6 @@ class VehicleController extends Controller
     public function create()
     {
         $mades = Made::select(['id', 'name', 'image'])->take(18)->get();
-        // return $mades;
         return view('front.vehicles.create', compact('mades'));
     }
 
@@ -41,7 +42,8 @@ class VehicleController extends Controller
      */
     public function store(VehicleRequest $request, VehicleService $vehicleService)
     {
-        $vehicleService->create($request->all());
+        $vehicleService->createVehicle($request->all());
+
         return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
@@ -54,8 +56,8 @@ class VehicleController extends Controller
     public
     function show($id)
     {
-        $vehicle = Vehicle::with('extras','seller:id,seller_name,seller_mobile')->findOrFail($id);
-     //   return $vehicle;
+        $vehicle = Vehicle::with('extras', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
+        //   return $vehicle;
         return view('front.vehicles.show', compact('vehicle'));
     }
 
@@ -94,5 +96,14 @@ class VehicleController extends Controller
     function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $filters = $request->all();
+        $vehicles = VehicleQuery::getFilteredVehicles($filters);
+        $moulds = Mould::query()->where('made_id', $filters['makes'])->with('children')->get();
+        return response()->json([$vehicles, $moulds], 200);
+
     }
 }

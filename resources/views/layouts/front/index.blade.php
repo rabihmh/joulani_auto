@@ -43,7 +43,7 @@
                 <img src="{{asset('Front/images/icons/logo.ico')}}" alt="أوتو أند درايف" title="أوتو أند درايف"/>
             </a>
             <a href="" class="">الرئيسية</a>
-            <a href="" class="">البحث</a>
+            <a href="{{route('front.vehicles.index')}}" class="">البحث</a>
             <a href="" class="">معارض السيارات</a>
             <a href="" class="">إتصل بنا</a>
             @auth('web')
@@ -84,7 +84,7 @@
             <nav id="nav">
                 <a href="/"
                    class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
-                <a href="" class="">البحث</a>
+                <a href="{{route('front.vehicles.index')}}" class="">البحث</a>
                 <a href="{{route('front.sellers.index')}}" class="">معارض السيارات</a>
                 <a href="" class="">إتصل بنا</a>
                 @auth('web')

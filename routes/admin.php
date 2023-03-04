@@ -25,3 +25,4 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => '
     Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);
 });
 Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');
+Route::get('admin/dashboard/made/get-moulds-child/{made_id}', [MouldController::class, 'getMouldsChild'])->name('moulds.ajax');

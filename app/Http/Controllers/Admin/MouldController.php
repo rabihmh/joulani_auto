@@ -12,20 +12,28 @@ class MouldController extends Controller
 {
     public function store(Request $request, $made_id)
     {
-        $request->validate([
-            'name' => 'required|min:3'
-        ]);
-        $made = Made::find($made_id);
-        if ($made) {
+        try {
+            $request->validate([
+                'name' => 'required|min:2',
+                'parent_id' => 'nullable|numeric'
+            ]);
+
+            $made = Made::find($made_id);
+            if (!$made) {
+                return redirect()->back()->with('error', 'غير موجود');
+            }
 
             $mould = Mould::create([
                 'made_id' => $made_id,
-                'name' => $request->post('name'),
-                'slug' => Str::slug($request->post('name')),
+                'name' => $request->input('name'),
+                'parent_id' => $request->input('parent_id'),
+                'slug' => Str::slug($request->input('name')),
             ]);
+
             return redirect()->back()->with('success', 'تم الاضافة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء الإضافة');
         }
-        return redirect()->back()->with('error', 'غير موجود');
     }
 
     public function show($id)
@@ -84,7 +92,40 @@ class MouldController extends Controller
 
     public function getMouldsById($id)
     {
-        $made = Made::findOrFail($id);
-        return response()->json($made['moulds']);
+        try {
+            $moulds = Mould::whereNull('parent_id')
+                ->with('children')
+                ->where('made_id', $id)
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $moulds
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
+
+
+    public function getMouldsChild($id)
+    {
+        try {
+            $moulds = Mould::where('parent_id', $id)->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $moulds
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

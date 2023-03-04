@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Made;
+use App\Models\Mould;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -45,7 +46,7 @@ class MadeController extends Controller
     public function show($id)
     {
         $made = Made::with(['moulds' => function ($q) {
-            $q->orderby('slug', 'asc');
+            $q->whereNull('parent_id')->orderby('slug', 'asc');
         }])->findorFail($id);
 
         return view('admin.mades.show', compact('made'));

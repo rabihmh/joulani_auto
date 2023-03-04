@@ -8,31 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class VehicleService
 {
-    public function create($vehicleData): Vehicle
+    public function createVehicle(array $vehicleData): Vehicle
     {
-        $vehicle = Vehicle::create([
-            'made_id' => $vehicleData['made_id'],
-            'mould_id' => $vehicleData['mould_id'],
-            'user_id' => Auth::guard('web')->id(),
-            'seller_id' => Auth::user()->seller->id,
-            'fuel' => $vehicleData['fuel'],
-            'gear' => $vehicleData['gear'],
-            'payment_method' => $vehicleData['payment_method'],
-            'num_of_seats' => $vehicleData['num_of_seats'],
-            'vehicle_status' => $vehicleData['vehicle_status'],
-            'drivetrain_system' => $vehicleData['drivetrain_system'],
-            'hp' => $vehicleData['hp'],
-            'power' => $vehicleData['power'],
-            'mileage' => $vehicleData['mileage'],
-            'year_of_product' => $vehicleData['year_of_product'],
-            'price' => $vehicleData['price'],
-            'body_color' => $vehicleData['body_color'],
-            'interior_color' => $vehicleData['interior_color'],
-            'extra_title' => $vehicleData['extra_title'],
-            'oimg' => $vehicleData['oimg'],
-            'num_of_keys' => $vehicleData['num_of_keys'],
+        $user = Auth::guard('web')->user();
+        $seller = $user->seller;
+        $vehicleData = array_merge($vehicleData, [
+            'user_id' => $user->id,
+            'seller_id' => $seller->id,
         ]);
-
+        $vehicle = Vehicle::create($vehicleData);
         Extra::create([
             'vehicle_id' => $vehicle->id,
             'ext_int_furniture' => $vehicleData['ext_int_furniture'],

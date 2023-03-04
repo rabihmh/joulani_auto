@@ -22,39 +22,12 @@
                             <select multiple="multiple" id="sellerCity" placeholder="الرجاء إختيار المدينة"
                                     onchange="console.log($(this).children(':selected').length)"
                                     class="choosenbox form-control">
-                                <option value="1">
-                                    الخليل
-                                </option>
-                                <option value="2">
-                                    رام الله
-                                </option>
-                                <option value="3">
-                                    القدس
-                                </option>
-                                <option value="4">
-                                    نابلس
-                                </option>
-                                <option value="5">
-                                    أريحا
-                                </option>
-                                <option value="6">
-                                    طولكرم
-                                </option>
-                                <option value="7">
-                                    البيرة
-                                </option>
-                                <option value="8">
-                                    جنين
-                                </option>
-                                <option value="9">
-                                    طوباس
-                                </option>
-                                <option value="10">
-                                    قلقيلية
-                                </option>
-                                <option value="11">
-                                    بيت لحم
-                                </option>
+
+                                @foreach(App\Models\Region::select('id','name')->get() as $region)
+                                    <option value="{{$region->id}}">
+                                        {{$region->name}}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -75,10 +48,8 @@
                             <h2 class="car-bx-title">{{$seller->seller_name}}</h2>
                             <div class="mb-1">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                @php
-                                 $region=\App\Models\Region::select('name')->where('id',$seller->region_id)->first()
-                                @endphp
-                                {{$region->name}}
+
+                                {{$seller->region->name}}
                             </div>
                             <div class="mb-1">
                                 <i class="fa fa-phone" aria-hidden="true"></i>
@@ -89,7 +60,7 @@
                                 {{$seller->vehicles_count}}
                             </div>
                         </div>
-                        <a href="/seller/21">
+                        <a href="{{route('front.sellers.show',$seller->id)}}">
                             <div class="car-more-details"> عرض المزيد
                                 <i class="fas fa-arrow-left"></i>
                             </div>
@@ -114,35 +85,32 @@
 
                 console.log(sellerTitle, sellerCity);
                 $.ajax({
-                    url: '/getSeller?title=' + sellerTitle + '&city=' + sellerCity,
+                    url: '/getSellers?title=' + sellerTitle + '&city=' + sellerCity,
                     type: 'get',
-                    headers: {
-                        'X-CSRF-TOKEN': "xLZPGQy3YfxTbsqRa0aMgtY6dzVkk3mBhiE64yiw"
-                    },
                     success: function (data) {
                         if (data != null) {
                             var sellers = '';
                             $.each(data, function (k, v) {
-                                console.log(v);
-                                sellers += ' <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">\n' +
-                                    '   <div class="car-bx hover01">\n' +
-                                    '   <figure><img src="/Front/img/logo.png"/></figure>\n' +
-                                    '  <div class="car-bx-body">\n' +
-                                    '      <h2 class="car-bx-title">' + v.seller_name + '</h2>\n' +
-                                    '      <div class="mb-1">\n' +
-                                    '          <i class="fa fa-map-marker" aria-hidden="true"></i>' + v.seller_address + '</div>\n' +
-                                    '        <div class="mb-1">\n' +
-                                    '               <i class="fa fa-phone" aria-hidden="true"></i>\n' +
-                                    '                <a href="tel:' + v.seller_mobile + '">' + v.seller_mobile + '</a>\n' +
-                                    '           </div>\n' +
-                                    '        <div class="car-bx-counter"><i class="fas fa-car"></i>' + v.vehicles_count + '</div>\n' +
-                                    '   </div>\n' +
-                                    '    <a href="/seller/' + v.id + '">\n' +
-                                    '        <div class="car-more-details"> عرض المزيد<i class="fas fa-arrow-left"></i></div>\n' +
-                                    '   </a>\n' +
-                                    ' </div>\n' +
+                                console.log(v.image);
+                                sellers += '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">\n' +
+                                    '<div class="car-bx hover01">\n' +
+                                    '<figure><img src="storage/'+ v.image+'"/></figure>\n' +
+                                    '<div class="car-bx-body">\n' +
+                                    '<h2 class="car-bx-title">' + v.seller_name + '</h2>\n' +
+                                    '<div class="mb-1">\n' +
+                                    '<i class="fa fa-map-marker" aria-hidden="true"></i>' + v.region.name + '</div>\n' +
+                                    '<div class="mb-1">\n' +
+                                    '<i class="fa fa-phone" aria-hidden="true"></i>\n' +
+                                    '<a href="tel:' + v.seller_mobile + '">' + v.seller_mobile + '</a>\n' +
                                     '</div>\n' +
-                                    '';
+                                    '<div class="car-bx-counter"><i class="fas fa-car"></i>' + v.vehicles_count + '</div>\n' +
+                                    '</div>\n' +
+                                    '<a href="/seller/' + v.id + '">\n' +
+                                    '<div class="car-more-details"> عرض المزيد<i class="fas fa-arrow-left"></i></div>\n' +
+                                    '</a>\n' +
+                                    '</div>\n' +
+                                    '</div>\n';
+
                             });
                             $("#sellersArea").html(sellers);
                         }

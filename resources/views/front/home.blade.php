@@ -4,8 +4,9 @@
             <section class="swiper-container art-blog-slider">
                 <div class="section-title mb-4"><h3>مركبات مميزة</h3></div>
                 <div class="swiper-wrapper">
-                    @foreach($vehicles as $vehicle)
-                        <a href="{{route('front.vehicles.show',$vehicle->id)}}" class="car-premium-card swiper-slide hover01">
+                    @foreach($specials as $vehicle)
+                        <a href="{{route('front.vehicles.show',$vehicle->id)}}"
+                           class="car-premium-card swiper-slide hover01">
                             <figure><img
                                     src="{{asset('storage/'.$vehicle->main_image)}}"
                                     alt="BMW " title=" " width="" height=""/></figure>
@@ -89,7 +90,8 @@
                                     </div>
                                 </div>
                             </a>
-                            <div data-id="{{$vehicle->id}}" data-img="{{asset('storage/'.$vehicle->main_image)}}" data-name=" "
+                            <div data-id="{{$vehicle->id}}" data-img="{{asset('storage/'.$vehicle->main_image)}}"
+                                 data-name=" "
                                  class="compareVehicle btn btn-sm btn-compare mb-2 text-white">مقارنة
                             </div>
                             <a href="{{route('front.vehicles.show',$vehicle->id)}}">

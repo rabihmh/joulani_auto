@@ -27,6 +27,18 @@
                 @csrf
                 <div class="row">
                     <div class="col-lg-9 col-md-8 form-group mg-b-0">
+                        <label class="form-label">Mould Parent Name: <span class="tx-danger">*</span></label>
+                        <select class="form-control" name="parent_id">
+                            <option value="">-----</option>
+                            @foreach($made->moulds as $mould )
+                                <option value="{{$mould->id}}">{{$mould->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('parent_id')
+                        <p class="text-danger mt-2">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="col-lg-9 col-md-8 form-group mg-b-0">
                         <label class="form-label">Mould Name: <span class="tx-danger">*</span></label>
                         <input class="form-control" name="name" placeholder="Enter mould name" type="text">
                         @error('name')
@@ -61,7 +73,7 @@
                                     <th scope="row">{{$loop->iteration}}</th>
                                     <td>{{$mould->name}}</td>
                                     <td>{{date('d-m-Y',strtotime($mould->created_at))}}</td>
-{{--                                    <td>{{$mould->created_at->diffForHumans(['short'=>'true'])}}</td>--}}
+                                    {{--                                    <td>{{$mould->created_at->diffForHumans(['short'=>'true'])}}</td>--}}
                                     <td class="d-flex">
                                         <a href="{{route('admin.moulds.edit',$mould->id)}}"
                                            class="btn btn-success ml-4">Edit</a>

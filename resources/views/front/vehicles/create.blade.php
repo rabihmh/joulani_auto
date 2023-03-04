@@ -1050,15 +1050,14 @@
                     var val = $(this).attr('data-id');
                     if (val) {
                         $.ajax({
-                            url: '/getModelChild/' + val,
+                            url: 'http://127.0.0.1:8000/admin/dashboard/made/get-moulds-child/' + val,
                             type: 'get',
-                            headers: {
-                                'X-CSRF-TOKEN': "oLul21SS9u1JCGju3CxupPcZceNhmovBMfCjAIWz"
-                            },
+                            headers: {},
                             success: function (data) {
-                                if (data != null) {
+                                let result = data.data;
+                                if (result != null) {
                                     var models = '';
-                                    $.each(data, function (k, v) {
+                                    $.each(result, function (k, v) {
                                         models += '' +
                                             '<div class="col-4 mb-2"> ' +
                                             '<div class="form-check">' +
@@ -1095,18 +1094,19 @@
                                 $('#vehicle').html('');
                             },
                             success: function (data) {
-                                console.log(data);
-                                if (data != null) {
+                                let result = data.data;
+                                console.log(result);
+                                if (result != null) {
                                     var models = '';
-                                    $.each(data, function (k, v) {
+                                    $.each(result, function (k, v) {
                                         models += '' +
                                             '<div class="col-4 mb-2"> ' +
                                             '<div class="form-check">';
-                                        // if (v.childs.length === 0) {
-                                        models += '<input name="optradio" value="' + v.id + '" data-id="' + v.name + '" class="radioModelName form-check-input" type="radio"> ';
-                                        // } else {
-                                        //     models += '<i data-id="' + v.id + '" class="fas fa-arrow-circle-left arrowModelName"></i>&nbsp;&nbsp;';
-                                        // }
+                                        if (v.children.length === 0) {
+                                            models += '<input name="optradio" value="' + v.id + '" data-id="' + v.name + '" class="radioModelName form-check-input" type="radio"> ';
+                                        } else {
+                                            models += '<i data-id="' + v.id + '" class="fas fa-arrow-circle-left arrowModelName"></i>&nbsp;&nbsp;';
+                                        }
                                         models += '<label name="checkedName"  class="form-check-label">' + v.name + '</label>' +
                                             ' </div>' +
                                             '</div>';

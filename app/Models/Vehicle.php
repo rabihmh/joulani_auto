@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -15,34 +15,35 @@ class Vehicle extends Model
         'id'
     ];
     protected $appends = ['vehicle_name'];
+    protected $casts = [
+        'is_special' => 'boolean',
+//        'year_of_product' => 'date',
+    ];
 
-//    protected function address(): Attribute
-//    {
-//        return Attribute::make(
-//            get: fn ($value, $attributes) => new Address(
-//                $attributes['address_line_one'],
-//                $attributes['address_line_two'],
-//            ),
-//            set: fn (Address $value) => [
-//                'address_line_one' => $value->lineOne,
-//                'address_line_two' => $value->lineTwo,
-//            ],
-//        );
-//    }
     //Accessors
     public function getVehicleNameAttribute(): string
     {
         return Cache::remember("vehicle_name_" . $this->id, 120, function () {
-            $made_name = Made::select('name')->where('id', $this->made_id)->first()->name;
-            $mould_name = Mould::select('name')->where('id', $this->mould_id)->first()->name;
-            return "{$made_name},{$mould_name}";
+            $madeName = optional($this->made)->name;
+            $mouldName = optional($this->mould)->name;
+            return "{$madeName},{$mouldName}";
         });
     }
 
+    protected static function booted()
+    {
+        static::addGlobalScope('active', function (Builder $builder) {
+            $builder->where('status', 'active');
+        });
+    }
 //    public function getAllImagesAttribute(): array
 //    {
 //        return preg_split('/\,/', $this->oimg);
 //    }
+    public function scopeSpecial(Builder $builder)
+    {
+        $builder->where('is_special', true);
+    }
 
     public function extras(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

@@ -22,4 +22,9 @@ class Seller extends Model
     {
         return $this->hasMany(Vehicle::class, 'seller_id', 'id');
     }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 }
