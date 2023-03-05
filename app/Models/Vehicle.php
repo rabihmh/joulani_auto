@@ -45,7 +45,7 @@ class Vehicle extends Model
         $builder->where('is_special', true);
     }
 
-    public function extras(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function extra(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Extra::class, 'vehicle_id');
     }

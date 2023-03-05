@@ -224,7 +224,8 @@
                                         </div>
                                     </a>
                                     <div data-id="{{$vehicle->id}}"
-                                         data-img="{{asset('storage/'.$vehicle->main_image)}}" data-name=" "
+                                         data-img="{{asset('storage/'.$vehicle->main_image)}}"
+                                         data-name="{{$vehicle->vehicle_name}}"
                                          class="compareVehicle btn btn-sm btn-compare mb-2 text-white">مقارنة
                                     </div>
                                     <a href="{{route('front.vehicles.show',$vehicle->id)}}">
@@ -266,5 +267,13 @@
             </div>
         </div>
     </div>
-
+    <x-slot:compareBox>
+        <div id="combareBox">
+            <div class="page_divider_title">مقارنة المركبات<span class="float-start close-bx"><i
+                        class="fas fa-times-circle"></i></span></div>
+            <div class="row" id="combar-bx-show">
+            </div>
+            <a href="#" id="hrefCompare" class="btn btn-danger btn-sm float-start ml-2 mt-2">مقارنة</a>
+        </div>
+    </x-slot:compareBox>
 </x-front>

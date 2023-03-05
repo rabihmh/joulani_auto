@@ -119,6 +119,7 @@
     </div>
     @include('layouts.flash-message')
     {{$slot}}
+    {{$compareBox??""}}
     <footer class="bg-blue">
         <div class="container p-3">
             <div class="row">

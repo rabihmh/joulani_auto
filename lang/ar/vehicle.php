@@ -85,4 +85,10 @@ return
         'ext_gen_other_door' => 'أبواب شفط',
         'ext_gen_other_safe' => 'رادار قياس مسافة',
         'ext_gen_other_crui' => 'محدد سرعة',
+
+        'ext_int_furniture_leat'=>'جلد',
+        'ext_int_furniture_colt'=>'قماش',
+        'ext_int_furniture_lndc'=>'جلد + قماش',
+        'ext_int_furniture_sprt'=>'رياضي',
+        'ext_int_furniture_velv'=>'مخمل',
     ];

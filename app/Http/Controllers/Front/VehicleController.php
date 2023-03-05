@@ -9,6 +9,7 @@ use App\Models\Mould;
 use App\Models\Vehicle;
 use App\Queries\VehicleQuery;
 use App\Services\VehicleService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -56,7 +57,7 @@ class VehicleController extends Controller
     public
     function show($id)
     {
-        $vehicle = Vehicle::with('extras', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
+        $vehicle = Vehicle::with('extra', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
         //   return $vehicle;
         return view('front.vehicles.show', compact('vehicle'));
     }
@@ -104,6 +105,18 @@ class VehicleController extends Controller
         $vehicles = VehicleQuery::getFilteredVehicles($filters);
         $moulds = Mould::query()->where('made_id', $filters['makes'])->with('children')->get();
         return response()->json([$vehicles, $moulds], 200);
+
+    }
+
+    public function compare(Request $request)
+    {
+        try {
+            $first_vehicle = Vehicle::query()->with('extra')->findOrFail($request->input('car1'));
+            $second_vehicle = Vehicle::query()->with('extra')->findOrFail($request->input('car2'));
+            return view('front.vehicles.compare', compact('first_vehicle', 'second_vehicle'));
+        } catch (ModelNotFoundException $e) {
+            return back()->with('لم يتم العثور على المركبة');
+        }
 
     }
 }

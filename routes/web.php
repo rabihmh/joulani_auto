@@ -23,11 +23,12 @@ Route::view('add/car', 'front.vehicles.create');
 Route::view('user/profile', 'front.users.userDashboard');
 Route::view('user/profile/edit', 'front.users.editProfile');
 Route::view('user/contact', 'front.users.contact');
-//Route::view('user/search', 'front.vehicles.search');
 Route::group(['middleware' => 'auth:web', 'as' => 'front.'], function () {
     Route::resource('vehicles', VehicleController::class);
     Route::resource('sellers', SellerController::class);
     Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
     Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
 });
+Route::get('compare', [VehicleController::class, 'compare'])->name('front.vehicles.compare');
+
 require __DIR__ . '/admin.php';

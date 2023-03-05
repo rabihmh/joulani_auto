@@ -143,25 +143,31 @@
                                         <tr>
                                             <td>فتحة سقف</td>
                                             <td>
-                                                <label class="btn btn-light btn-sm">{{__('vehicle.'.$vehicle->extras->ext_int_sunroof)}}</label>
+                                                <label class="btn btn-light btn-sm">{{__('vehicle.'.$vehicle->extra->ext_int_sunroof)}}</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>الزجاج</td>
                                             <td>
-                                               {!!\App\Facades\VehicleDataFacade::display($vehicle->extras->ext_int_glass)!!}
+                                               {!!\App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_glass)!!}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>الشاشات</td>
                                             <td>
-                                                {!!\App\Facades\VehicleDataFacade::display($vehicle->extras->ext_int_screens)!!}
+                                                {!!\App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_screens)!!}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>المقاعد</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_int_seats) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_seats) !!}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>نوع الفرش</td>
+                                            <td>
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_furniture) !!}
                                             </td>
                                         </tr>
                                     </table>
@@ -171,35 +177,35 @@
                                         <tr>
                                             <td>المقود</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_int_steering) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_steering) !!}
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>الحساسات</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_ext_sensors) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_ext_sensors) !!}
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>المرايا</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_ext_mirrors) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_ext_mirrors) !!}
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>الإضاءة</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_ext_light) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_ext_light) !!}
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>الكاميرات</td>
                                             <td>
-                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_ext_cameras) !!}
+                                                {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_ext_cameras) !!}
                                             </td>
                                         </tr>
                                         <tr>
@@ -226,7 +232,7 @@
                                     <tr>
                                         <td>إضافات داخلية أخرى</td>
                                         <td>
-                                            {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_int_other) !!}
+                                            {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_int_other) !!}
 
                                         </td>
                                     </tr>
@@ -235,7 +241,7 @@
                                     <tr>
                                         <td width="25%">إضافات أخرى</td>
                                         <td>
-                                            {!! \App\Facades\VehicleDataFacade::display($vehicle->extras->ext_gen_other) !!}
+                                            {!! \App\Facades\VehicleDataFacade::display($vehicle->extra->ext_gen_other) !!}
 
                                         </td>
                                     </tr>
