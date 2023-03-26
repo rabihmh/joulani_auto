@@ -15,6 +15,7 @@ class VehicleService
         $vehicleData = array_merge($vehicleData, [
             'user_id' => $user->id,
             'seller_id' => $seller->id,
+            'status'=>'inactive'
         ]);
         $vehicle = Vehicle::create($vehicleData);
         Extra::create([

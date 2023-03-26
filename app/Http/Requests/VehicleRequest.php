@@ -38,7 +38,7 @@ class VehicleRequest extends FormRequest
             'drivetrain_system' => 'required',
             'body_color' => 'required',
             'interior_color' => 'required',
-            'extra_title' => 'required',
+//            'extra_title' => 'required',
             'num_of_keys' => 'required',
             'year_of_product' => 'required',
             'oimg' => 'required',

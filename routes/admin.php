@@ -22,6 +22,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => '
     Route::delete('moulds/{mould}/force-delete', [MouldController::class, 'forceDelete'])->name('moulds.force-delete');
     Route::resource('mades', MadeController::class);
     Route::resource('vehicles', VehiclesController::class);
+    Route::put('vehicles/status-update/{id}', [VehiclesController::class, 'updateStatus'])->name('vehicles.status');
+    Route::put('vehicles/set-is-special/{id}', [VehiclesController::class, 'updateSpecial'])->name('vehicles.special');
     Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);
 });
 Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');

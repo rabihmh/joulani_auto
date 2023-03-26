@@ -18,7 +18,7 @@
                                     <h3>{{$vehicle->price}}&nbsp;&nbsp;<i class="ml-1 fas fa-dollar-sign"></i></h3>
                                 </div>
                                 <div>
-                                    <h3>عادي&nbsp;&nbsp;<i class="ml-1 fas fa-cog"></i></h3>
+                                    <h3>{{__('vehicle.'.$vehicle->gear)}}&nbsp;<i class="ml-1 fas fa-cog"></i></h3>
                                 </div>
                                 <div>
                                     <h3>{{$vehicle->year_of_product}}&nbsp;&nbsp;<i

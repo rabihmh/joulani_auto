@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleRequest;
 use App\Models\Made;
 use App\Models\Mould;
+use App\Models\User;
 use App\Models\Vehicle;
 use App\Queries\VehicleQuery;
 use App\Services\VehicleService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use App\Traits\ImageDeleteTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class VehicleController extends Controller
 {
+    use ImageDeleteTrait;
 
     public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
@@ -44,7 +47,6 @@ class VehicleController extends Controller
     public function store(VehicleRequest $request, VehicleService $vehicleService)
     {
         $vehicleService->createVehicle($request->all());
-
         return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
@@ -91,12 +93,14 @@ class VehicleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::query()->findOrFail($id);
+        $this->deleteImage($vehicle->oimg);
+        $vehicle->delete();
+        return response()->json('delete');
     }
 
     public function search(Request $request): \Illuminate\Http\JsonResponse

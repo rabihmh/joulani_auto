@@ -3,6 +3,12 @@
     Admin - Vehicles
 @endsection
 @section('css')
+    <!--switchery css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
+    <!--sweet alert -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.css"/>
+
 @endsection
 
 @section('page-header')
@@ -33,6 +39,8 @@
                                 <th>Created at</th>
                                 <th>Added by</th>
                                 <th>Control</th>
+                                <th>Status</th>
+                                <th>Is Special</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,7 +54,8 @@
                                     <td>{{date('d-m-Y',strtotime($vehicle->created_at))}}</td>
                                     <td>{{$vehicle->user->name}}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('admin.vehicles.show',$vehicle->id)}}"class="btn btn-primary ml-4">View</a>
+                                        <a href="{{route('admin.vehicles.show',$vehicle->id)}}"
+                                           class="btn btn-primary ml-4">View</a>
                                         <a class="btn btn-success ml-4">Edit</a>
                                         <form action="" method="POST">
                                             @csrf
@@ -54,10 +63,19 @@
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </td>
+                                    <td>
+                                        <input type="checkbox" data-id="{{ $vehicle->id }}" name="status"
+                                               class="js-switch status" {{ $vehicle->status == 'active' ? 'checked' : '' }}>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-id="{{ $vehicle->id }}" name="is_special"
+                                               class="js-switch special" {{ $vehicle->is_special == 1 ? 'checked' : '' }}>
+                                    </td>
+
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center text-danger text-lg text-bold" colspan="4">No Vehicles
+                                    <td class="text-center text-danger text-lg text-bold" colspan="8">No Vehicles
                                         defined
                                     </td>
                                 </tr>
@@ -79,4 +97,64 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <!--switchery js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
+    <!--sweet alert js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.js"></script>
+
+    <script>
+        let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        elems.forEach(function (html) {
+            let switchery = new Switchery(html, {size: 'small'});
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.status').change(function () {
+                let status = $(this).prop('checked') === true ? 'active' : 'inactive';
+                let vehicle_id = $(this).data('id');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    type: "put",
+                    dataType: "json",
+                    url: '/admin/dashboard/vehicles/status-update/' + vehicle_id,
+                    data: {'status': status},
+                    success: function (data) {
+                        Swal.fire(
+                            'تم!',
+                            data.message,
+                            'success'
+                        )
+                    }
+                });
+            });
+            $('.special').change(function () {
+                let special = $(this).prop('checked') === true ? 1 : 0;
+                let vehicle_id = $(this).data('id');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    type: "put",
+                    dataType: "json",
+                    url: '/admin/dashboard/vehicles/set-is-special/' + vehicle_id,
+                    data: {'special': special},
+                    success: function (data) {
+                        Swal.fire(
+                            'تم!',
+                            data.message,
+                            'success'
+                        )
+                    }
+                });
+            });
+        });
+
+    </script>
 @endsection

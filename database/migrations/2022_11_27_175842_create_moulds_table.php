@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('made_id')->constrained('mades')->cascadeOnDelete();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
+            //$table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

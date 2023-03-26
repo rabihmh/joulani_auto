@@ -24,6 +24,8 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{{asset('Front/css/bootstrap-slider.css')}}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.css" />
+
     <link rel="stylesheet" href="{{asset('Front/css/style.css')}}"/>
 
     <meta name="csrf-token" content="sCqI4SS9Tc3yZWnJGOptjwM36m1DpBoFWMD5dCFV"/>
@@ -175,6 +177,9 @@
     <script src="{{asset('Front/js/all.min.js')}}"></script>
     <script src="{{asset('Front/js/bootstrap-slider.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.js"></script>
+    <script src="{{asset('Front/js/sweet-alert.js')}}"></script>
+
     <script src="{{asset('Front/js/myCode.js')}}"></script>
     @stack('js')
 

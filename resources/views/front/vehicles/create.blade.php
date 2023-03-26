@@ -7,7 +7,13 @@
         </div>
     </x-slot:breadcrumbs>
     <div class="container mt-1 mb-5">
-
+        @if($errors)
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        @endif
         <form method="POST" action="{{route('front.vehicles.store')}}">
             @csrf
             <div class="row">

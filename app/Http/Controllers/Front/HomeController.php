@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         $vehicles = Vehicle::query()->select('vehicles.*', 'made.name as made_name', 'mould.name as mould_name')
             ->join('mades as made', 'vehicles.made_id', '=', 'made.id')
-            ->join('moulds as mould', 'vehicles.mould_id', '=', 'mould.id')
+            ->join('moulds as mould', 'vehicles.mould_id', '=', 'mould.id')->orderByDesc('created_at')
             ->get()->take(12);
 
         $specials = Vehicle::query()->select('vehicles.*', 'made.name as made_name', 'mould.name as mould_name')

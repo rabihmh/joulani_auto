@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->string('drivetrain_system', 4);
             $table->string('body_color');
             $table->string('interior_color');
-            $table->string('extra_title');
+            $table->string('extra_title')->nullable();
             $table->string('num_of_keys');
             $table->string('year_of_product');
             $table->text('oimg');
