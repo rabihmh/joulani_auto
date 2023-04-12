@@ -41,7 +41,8 @@
             </div>
             <div class="col-4">
                 <div class="d-grid gap-2">
-                    <a href="{{route('front.vehicles.create')}}" class="btn btn-sm btn-outline-secondary">إضافة مركبة</a>
+                    <a href="{{route('front.vehicles.create')}}" class="btn btn-sm btn-outline-secondary">إضافة
+                        مركبة</a>
                 </div>
             </div>
         </div>
@@ -63,7 +64,8 @@
                         <td class="image-cell"><img src="{{asset('storage/'.$vehicle->main_image)}}"
                                                     class="vehicle-image"></td>
                         <td>{{$vehicle->vehicle_name}}</td>
-                        <td><a class="btn btn-primary ">تعديل</a></td>
+                        <td><a class="btn btn-primary" href="{{route('front.vehicles.edit',$vehicle->id)}}">تعديل</a>
+                        </td>
                         <td><a class="btn btn-danger" id="delete-button" data-id="{{$vehicle->id}}">حذف</a></td>
                     </tr>
                 @endforeach
@@ -73,10 +75,18 @@
     </div>
     @push('js')
         <script>
-            $('#delete-button').click(function () {
-                let id = $(this).data('id');
-                displayAlert(id);
-            });
+            let csrf="{{csrf_token()}}"
+            let d_btn = document.querySelectorAll('#delete-button');
+            d_btn.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    let id = btn.getAttribute('data-id');
+                    displayAlert(id,csrf);
+                })
+            })
+            // $('#delete-button').click(function () {
+            //     let id = $(this).data('id');
+            //     displayAlert(id);
+            // });
         </script>
 
     @endpush

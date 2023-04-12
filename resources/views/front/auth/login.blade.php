@@ -1,4 +1,11 @@
 <x-front title="Login">
+    @if($errors)
+        @foreach($errors->all() as $error)
+            {{$error}}
+            <br>
+        @endforeach
+    @endif
+
     <div class="container">
         <div class="card m-auto mt-5 mb-5">
             <div class="card-header bg-blue text-white">تسجيل الدخول</div>

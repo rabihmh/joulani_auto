@@ -50,7 +50,7 @@
             <a href="" class="">إتصل بنا</a>
             @auth('web')
                 <a href="{{route('front.vehicles.create')}}" class=" active ">إضافة مركبة</a>
-                <a href="" class="">حسابي</a>
+                <a href="{{route('front.user.dashboard')}}" class="">حسابي</a>
                 <a href="#"
                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                     تسجيل الخروج
@@ -91,7 +91,7 @@
                 <a href="" class="">إتصل بنا</a>
                 @auth('web')
                     <a href="{{route('front.vehicles.create')}}">إضافة مركبة</a>
-                    <a href="/my" class="">حسابي</a>
+                    <a href="{{route('front.user.dashboard')}}" class="">حسابي</a>
 
                     <a href="#"
                        onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">

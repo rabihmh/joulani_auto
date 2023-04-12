@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('vehicles', function (Blueprint $table) {
-            $table->string('main_image')->nullable()->after('year_of_product');
+            $table->string('main_image')->default('uploads/vehicles/default.jpeg')->after('year_of_product');
         });
     }
 

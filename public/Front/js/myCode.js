@@ -323,20 +323,20 @@ $(document).ready(function () {
             'right': -500
         });
     })
-    $(".deleteImg").click(function () {
-        var thisImg = $(this);
-        var val = thisImg.attr('id');
-        $.ajax({
-            url: '/deleteCarImg/' + val,
-            type: 'get',
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function (data) {
-                if (data == 1) {
-                    thisImg.parent().parent().remove();
-                }
-            }
-        })
-    })
+    // $(".deleteImg").click(function () {
+    //     var thisImg = $(this);
+    //     var val = thisImg.attr('id');
+    //     $.ajax({
+    //         url: '/deleteCarImg/' + val,
+    //         type: 'get',
+    //         headers: {
+    //             'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    //         },
+    //         success: function (data) {
+    //             if (data == 1) {
+    //                 thisImg.parent().parent().remove();
+    //             }
+    //         }
+    //     })
+    // })
 })

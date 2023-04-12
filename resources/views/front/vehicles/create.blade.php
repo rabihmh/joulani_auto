@@ -17,7 +17,7 @@
         <form method="POST" action="{{route('front.vehicles.store')}}">
             @csrf
             <div class="row">
-                <x-mades :data="$mades"/>
+                <x-vehicle.mades :data="$mades"/>
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
                     <div class="card mb-3">
                         <div class="card-header text-white bg-blue">نوع الوقود

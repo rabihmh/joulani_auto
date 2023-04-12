@@ -1,4 +1,4 @@
-function displayAlert(id){
+function displayAlert(id,csrf){
     Swal.fire({
         title: 'هل أنت متأكد؟',
         text: "لن تتمكن من التراجع عن هذا !",
@@ -19,11 +19,11 @@ function displayAlert(id){
                 fetch('/vehicles/'+id, {
                     method: 'DELETE',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-CSRF-TOKEN': csrf,
                         'Content-Type': 'application/json'
                     }
                 }).then(() => {
-                    location.reload();
+                     location.reload();
                 }).catch((error) => {
                     console.error('Error:', error);
                 });

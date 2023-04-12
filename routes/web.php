@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('front.home');
 Route::view('register/seller', 'front.auth.seller')->name('register.seller')->middleware('guest:web');
-Route::post('uploadsImage/{folder}', [ImageController::class, 'uploadImage'])->name('upload');
+Route::post('uploadsImage/{folder}/{vehicle_id?}', [ImageController::class, 'uploadImage'])->name('upload');
+Route::put('deleteCarImage/{id}', [ImageController::class, 'edit']);
 Route::view('user/profile', 'front.users.userDashboard');
 Route::view('user/profile/edit', 'front.users.editProfile');
 Route::view('user/contact', 'front.users.contact');
@@ -28,7 +29,7 @@ Route::group(['middleware' => 'auth:web', 'as' => 'front.'], function () {
     Route::resource('sellers', SellerController::class);
     Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
     Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
-    Route::get('userDashboard', [UserController::class, 'index'])->name('front.user');
+    Route::get('userDashboard', [UserController::class, 'index'])->name('user.dashboard');
 });
 Route::get('compare', [VehicleController::class, 'compare'])->name('front.vehicles.compare');
 

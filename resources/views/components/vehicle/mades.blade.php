@@ -1,5 +1,7 @@
 @props([
-    'data'=>''
+    'data'=>'',
+    'made_id'=>'',
+    'mould_id'=>'',
 ]);
 <div class="col-12">
     <div class="card mb-3">
@@ -19,8 +21,8 @@
             </div>
             <div class="mt-1 mb-1 card-body  d-none " id="chosenCarOnAdd">
                 <hr/>
-                <input type="hidden" value="" name="made_id" id="makes_type">
-                <input type="hidden" value="" name="mould_id" id="made_type">
+                <input type="hidden" value="{{$made_id}}" name="made_id" id="makes_type">
+                <input type="hidden" value="{{$mould_id}}" name="mould_id" id="made_type">
                 <div class="row">
                     <div class="col-2 text-center" id="MakeImg">
                     </div>

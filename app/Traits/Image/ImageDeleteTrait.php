@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Image;
 
 use Illuminate\Support\Facades\Storage;
 
