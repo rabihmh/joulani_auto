@@ -24,7 +24,8 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{{asset('Front/css/bootstrap-slider.css')}}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.css"/>
 
     <link rel="stylesheet" href="{{asset('Front/css/style.css')}}"/>
 
@@ -90,7 +91,9 @@
                 <a href="{{route('front.sellers.index')}}" class="">معارض السيارات</a>
                 <a href="" class="">إتصل بنا</a>
                 @auth('web')
-                    <a href="{{route('front.vehicles.create')}}">إضافة مركبة</a>
+                    @can('vehicles.create')
+                        <a href="{{route('front.vehicles.create')}}">إضافة مركبة</a>
+                    @endcan
                     <a href="{{route('front.user.dashboard')}}" class="">حسابي</a>
 
                     <a href="#"

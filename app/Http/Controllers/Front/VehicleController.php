@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VehicleRequest;
 use App\Models\Made;
 use App\Models\Mould;
 use App\Models\Vehicle;
@@ -11,6 +12,7 @@ use App\Services\VehicleService;
 use App\Traits\Image\ImageDeleteTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class VehicleController extends Controller
 {
@@ -32,37 +34,43 @@ class VehicleController extends Controller
 
     public function create()
     {
+        Gate::authorize('vehicles.create');
         $mades = Made::select(['id', 'name', 'image'])->take(18)->get();
         return view('front.vehicles.create', compact('mades'));
     }
 
-    public function store(Request $request)
+    public function store(VehicleRequest $request)
     {
+        Gate::authorize('vehicles.create');
         $this->vehicleService->createVehicle($request->all());
         return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
     public function show($id)
     {
+        Gate::authorize('vehicles.view');
         $vehicle = Vehicle::with('extra', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
         return view('front.vehicles.show', compact('vehicle'));
     }
 
     public function edit(Vehicle $vehicle)
     {
+        Gate::authorize('vehicles.edit');
+
         $mades = Made::query()->select(['id', 'name', 'image'])->get();
         return view('front.vehicles.edit', compact('vehicle', 'mades'));
     }
 
-    public function update(Request $request, $id)
+    public function update(VehicleRequest $request, $id)
     {
-
+        Gate::authorize('vehicles.edit');
         $this->vehicleService->updateVehicle($request->all(), $id);
         return redirect()->route('front.user.dashboard')->with('success', __('تم تعديل  بنجاح'));
     }
 
     public function destroy($id)
     {
+        Gate::authorize('vehicles.delete');
         $vehicle = Vehicle::query()->findOrFail($id);
         $this->deleteImage($vehicle->oimg);
         $vehicle->delete();

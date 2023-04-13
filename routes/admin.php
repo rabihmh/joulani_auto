@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Admin\MouldController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MadeController;
@@ -25,6 +26,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => '
     Route::put('vehicles/status-update/{id}', [VehiclesController::class, 'updateStatus'])->name('vehicles.status');
     Route::put('vehicles/set-is-special/{id}', [VehiclesController::class, 'updateSpecial'])->name('vehicles.special');
     Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);
+    Route::resource('roles', RolesController::class);
 });
 Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');
 Route::get('admin/dashboard/made/get-moulds-child/{made_id}', [MouldController::class, 'getMouldsChild'])->name('moulds.ajax');

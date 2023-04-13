@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RegionSeeder::class,
             MadesSeeder::class,
+            AdminSeeder::class,
+            SellerSeeder::class
         ]);
 
 

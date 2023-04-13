@@ -5,8 +5,10 @@ namespace App\Actions\Fortify\Services;
 use App\Actions\Fortify\Validations\PasswordValidationRules;
 use App\Actions\Fortify\Validations\UserValidationRules;
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\Seller;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -28,7 +30,7 @@ class Create
         Validator::make($input, $this->userValidationRules->userRule()
         )->validate();
 
-        return Admin::create([
+        $admin = Admin::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'username' => Str::slug($input['name']),
@@ -37,6 +39,11 @@ class Create
             'status' => 'active',
             'type' => 'admin'
         ]);
+        $admin->roles()->attach(1, [
+            'authorizable_type' => get_class($admin),
+            'authorizable_id' => $admin->id,
+        ]);
+        return $admin;
     }
 
     /**
@@ -54,7 +61,15 @@ class Create
                 'password' => Hash::make($input['password']),
                 'user_type' => $input['register']
             ]);
-
+//            DB::table('role_user')->insert([
+//                'authorizable_type' => 'App\Models\User',
+//                'id' => $user->id,
+//                'role_id' => 3
+//            ]);
+            $user->roles()->attach(3, [
+                'authorizable_type' => get_class($user),
+                'authorizable_id' => $user->id,
+            ]);
             Seller::create([
                 'user_id' => $user->id,
                 'region_id' => $input['region_id'],
@@ -67,12 +82,16 @@ class Create
         }
         Validator::make($input, $this->userValidationRules->UserRule()
         )->validate();
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
         ]);
-
+        $user->roles()->attach(3, [
+            'authorizable_type' => get_class($user),
+            'authorizable_id' => $user->id,
+        ]);
+        return $user;
     }
 }

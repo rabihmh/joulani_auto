@@ -43,14 +43,21 @@
                                     <td><img style="width: 50px" src="{{asset("storage/{$made->image}")}}"></td>
                                     <td>{{date('d-m-Y',strtotime($made->created_at))}}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('admin.mades.show',$made->id)}}" class="btn btn-primary ml-4">View</a>
-                                        <a href="{{route('admin.mades.edit',$made->id)}}"
-                                           class="btn btn-success ml-4">Edit</a>
+                                        @can('mades.view')
+                                            <a href="{{route('admin.mades.show',$made->id)}}"
+                                               class="btn btn-primary ml-4">View</a>
+                                        @endcan
+                                        @can('mades.edit')
+                                            <a href="{{route('admin.mades.edit',$made->id)}}"
+                                               class="btn btn-success ml-4">Edit</a>
+                                        @endcan
+                                            @can('mades.delete')
                                         <form action="{{route('admin.mades.destroy',$made->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
+                                            @endcan
                                     </td>
                                 </tr>
                             @empty

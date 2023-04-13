@@ -64,9 +64,14 @@
                         <td class="image-cell"><img src="{{asset('storage/'.$vehicle->main_image)}}"
                                                     class="vehicle-image"></td>
                         <td>{{$vehicle->vehicle_name}}</td>
-                        <td><a class="btn btn-primary" href="{{route('front.vehicles.edit',$vehicle->id)}}">تعديل</a>
-                        </td>
-                        <td><a class="btn btn-danger" id="delete-button" data-id="{{$vehicle->id}}">حذف</a></td>
+                        @can('vehicles.edit')
+                            <td><a class="btn btn-primary"
+                                   href="{{route('front.vehicles.edit',$vehicle->id)}}">تعديل</a>
+                            </td>
+                        @endcan
+                        @can('vehicles.delete')
+                            <td><a class="btn btn-danger" id="delete-button" data-id="{{$vehicle->id}}">حذف</a></td>
+                        @endcan
                     </tr>
                 @endforeach
                 </tbody>
@@ -75,18 +80,14 @@
     </div>
     @push('js')
         <script>
-            let csrf="{{csrf_token()}}"
+            let csrf = "{{csrf_token()}}"
             let d_btn = document.querySelectorAll('#delete-button');
             d_btn.forEach(function (btn) {
                 btn.addEventListener('click', function () {
                     let id = btn.getAttribute('data-id');
-                    displayAlert(id,csrf);
+                    displayAlert(id, csrf);
                 })
             })
-            // $('#delete-button').click(function () {
-            //     let id = $(this).data('id');
-            //     displayAlert(id);
-            // });
         </script>
 
     @endpush
