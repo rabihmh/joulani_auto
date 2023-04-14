@@ -31,16 +31,14 @@ Route::group(['as' => 'front.'], function () {
         Route::get('userDashboard', [UserController::class, 'index'])->name('user.dashboard');
     });
 
-    Route::middleware('guest:web')->group(function () {
-        Route::get('vehicles/', [VehicleController::class, 'index'])
-            ->name('vehicles.index')->withoutMiddleware('auth:web');
-        Route::get('vehicles/{vehicle}', [VehicleController::class, 'show'])
-            ->name('vehicles.show')->withoutMiddleware('auth:web');
-        Route::resource('sellers', SellerController::class)->only(['index', 'show']);
-        Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
-        Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
-        Route::get('compare', [VehicleController::class, 'compare'])->name('vehicles.compare');
-    });
+    Route::get('vehicles', [VehicleController::class, 'index'])
+        ->name('vehicles.index');
+    Route::get('vehicles/{vehicle}', [VehicleController::class, 'show'])
+        ->name('vehicles.show');
+    Route::resource('sellers', SellerController::class);
+    Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
+    Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
+    Route::get('compare', [VehicleController::class, 'compare'])->name('vehicles.compare');
 });
 
 require __DIR__ . '/admin.php';
