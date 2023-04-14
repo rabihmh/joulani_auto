@@ -1,4 +1,4 @@
-@extends('layouts.front.index')
+@extends('components.front.index')
 @section('css')
 @endsection
 @section('breadcrumbs')
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="col-2 text-center">
                                         <div class="btn btn-warning" id="deleteUserChoice"><i
-                                                class="fas fa-trash-alt"></i>
+                                                    class="fas fa-trash-alt"></i>
                                         </div>
                                     </div>
                                 </div>

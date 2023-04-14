@@ -1,4 +1,15 @@
 <x-front title="اضافة مركبة">
+    @push('css')
+        <style>
+            .made_in {
+                width: 120px;
+            }
+
+            .mould_in {
+                width: 80px;
+            }
+        </style>
+    @endpush
     <x-slot:breadcrumbs>
         <div class="container">
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="/">الرئيسية</a></span>
@@ -1056,7 +1067,7 @@
                     var val = $(this).attr('data-id');
                     if (val) {
                         $.ajax({
-                            url: 'http://127.0.0.1:8000/admin/dashboard/made/get-moulds-child/' + val,
+                            url: '/admin/dashboard/made/get-moulds-child/' + val,
                             type: 'get',
                             headers: {},
                             success: function (data) {
@@ -1090,7 +1101,7 @@
                     if (val) {
                         $.ajax({
 
-                            url: "http://127.0.0.1:8000/admin/dashboard/made/get-moulds-id/" + val,
+                            url: "/admin/dashboard/made/get-moulds-id/" + val,
                             type: 'get',
                             headers: {},
                             beforeSend: function () {

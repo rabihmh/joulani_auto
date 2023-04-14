@@ -26,6 +26,6 @@ class front extends Component
      */
     public function render()
     {
-        return view('layouts.front.index');
+        return view('components.front.index');
     }
 }

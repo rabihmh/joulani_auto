@@ -1,4 +1,4 @@
-<x-front>
+<x-front title="{{$seller->seller_name}}">
     <x-slot:breadcrumbs>
         <div class="container">
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="/">الرئيسية</a></span>

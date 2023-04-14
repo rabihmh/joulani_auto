@@ -24,11 +24,11 @@
                 <input type="hidden" value="{{$made_id}}" name="made_id" id="makes_type">
                 <input type="hidden" value="{{$mould_id}}" name="mould_id" id="made_type">
                 <div class="row">
-                    <div class="col-2 text-center" id="MakeImg">
+                    <div class="col-2 text-center " id="MakeImg">
                     </div>
-                    <div class="col-2 text-center" id="MakeName">
+                    <div class="col-2 text-center make_in" id="MakeName">
                     </div>
-                    <div class="col-2 text-center" id="ModelName">
+                    <div class="col-2 text-center mould_in" id="ModelName">
                     </div>
                     <div class="col-2 text-center">
                         <div class="btn btn-warning" id="deleteUserChoice"><i

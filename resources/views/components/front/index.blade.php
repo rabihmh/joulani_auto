@@ -159,7 +159,7 @@
     </footer>
     <div class="mobile-footer p-1">
         <div class="col-12 center text-white mt-1 mb-1">
-            جميع الحقوق محفوظة لموقع أوتو أند درايف @ 2022
+            جميع الحقوق محفوظة لموقع جولاني أوتو @ 2022
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-<x-front>
+<x-front title="جولاني أوتو | المعارض">
     <x-slot:breadcrumbs>
         <div class="container">
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url"
@@ -94,7 +94,7 @@
                                 console.log(v.image);
                                 sellers += '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">\n' +
                                     '<div class="car-bx hover01">\n' +
-                                    '<figure><img src="storage/'+ v.image+'"/></figure>\n' +
+                                    '<figure><img src="storage/' + v.image + '"/></figure>\n' +
                                     '<div class="car-bx-body">\n' +
                                     '<h2 class="car-bx-title">' + v.seller_name + '</h2>\n' +
                                     '<div class="mb-1">\n' +
