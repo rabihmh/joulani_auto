@@ -1,4 +1,4 @@
-@extends('components.front.index')
+@extends('components.index')
 @section('css')
 @endsection
 @section('breadcrumbs')

@@ -48,7 +48,7 @@ class VehicleController extends Controller
 
     public function show($id)
     {
-        Gate::authorize('vehicles.view');
+//        Gate::authorize('vehicles.view');
         $vehicle = Vehicle::with('extra', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
         return view('front.vehicles.show', compact('vehicle'));
     }

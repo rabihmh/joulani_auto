@@ -21,7 +21,7 @@
                                            href="/">الرئيسية</a></span>
             <span class="sep">»</span>
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url"
-                                           href="https://autoanddrive.com/vehicles">المركبات</a></span>
+                                           href="{{route('front.vehicles.index')}}">المركبات</a></span>
             <span class="sep">»</span>
             <span typeof="v:Breadcrumb"><span property="v:title" class="current">لوحة التحكم</span></span>
         </div>
@@ -30,21 +30,23 @@
         <div class="row mb-2">
             <div class="col-4">
                 <div class="d-grid gap-2">
-                    <a href="https://autoanddrive.com/myCars" class="btn btn-sm  btn-outline-secondary ">سياراتي</a>
+                    <a href="/userDashboard" class="btn btn-sm  btn-outline-secondary ">سياراتي</a>
                 </div>
             </div>
             <div class="col-4">
                 <div class="d-grid gap-2">
-                    <a href="https://autoanddrive.com/userprofile" class="btn btn-sm  btn-outline-secondary ">معلومات
+                    <a href="#" class="btn btn-sm  btn-outline-secondary ">معلومات
                         الحساب</a>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="d-grid gap-2">
-                    <a href="{{route('front.vehicles.create')}}" class="btn btn-sm btn-outline-secondary">إضافة
-                        مركبة</a>
+            @can('vehicles.create')
+                <div class="col-4">
+                    <div class="d-grid gap-2">
+                        <a href="{{route('front.vehicles.create')}}" class="btn btn-sm btn-outline-secondary">إضافة
+                            مركبة</a>
+                    </div>
                 </div>
-            </div>
+            @endcan
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">

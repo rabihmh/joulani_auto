@@ -39,7 +39,7 @@ class Create
             'status' => 'active',
             'type' => 'admin'
         ]);
-        $admin->roles()->attach(1, [
+        $admin->roles()->attach(2, [
             'authorizable_type' => get_class($admin),
             'authorizable_id' => $admin->id,
         ]);
@@ -88,7 +88,7 @@ class Create
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
         ]);
-        $user->roles()->attach(3, [
+        $user->roles()->attach(4, [
             'authorizable_type' => get_class($user),
             'authorizable_id' => $user->id,
         ]);

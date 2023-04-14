@@ -45,13 +45,19 @@
             <a href="/" class="mobile-logo">
                 <img src="{{asset('Front/images/icons/logo.ico')}}" alt="أوتو أند درايف" title="أوتو أند درايف"/>
             </a>
-            <a href="" class="">الرئيسية</a>
-            <a href="{{route('front.vehicles.index')}}" class="">البحث</a>
-            <a href="" class="">معارض السيارات</a>
-            <a href="" class="">إتصل بنا</a>
+            <a href="/" class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
+            <a href="{{route('front.vehicles.index')}}"
+               class="{{ Request::url() == route('front.vehicles.index') ? 'active' : '' }}">البحث</a>
+            <a href="{{route('front.sellers.index')}}"
+               class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
+            <a href="/user/contact" class="{{ Request::url() == route('contact') ? 'active' : '' }}">إتصل بنا</a>
             @auth('web')
-                <a href="{{route('front.vehicles.create')}}" class=" active ">إضافة مركبة</a>
-                <a href="{{route('front.user.dashboard')}}" class="">حسابي</a>
+                @can('vehicles.create')
+                    <a href="{{route('front.vehicles.create')}}"
+                       class="{{ Request::url() == route('front.vehicles.create') ? 'active' : '' }}">إضافة مركبة</a>
+                @endcan
+                <a href="{{route('front.user.dashboard')}}"
+                   class="{{ Request::url() == route('front.user.dashboard') ? 'active' : '' }}">حسابي</a>
                 <a href="#"
                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                     تسجيل الخروج
@@ -87,14 +93,19 @@
             <nav id="nav">
                 <a href="/"
                    class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
-                <a href="{{route('front.vehicles.index')}}" class="">البحث</a>
-                <a href="{{route('front.sellers.index')}}" class="">معارض السيارات</a>
-                <a href="" class="">إتصل بنا</a>
+                <a href="{{route('front.vehicles.index')}}"
+                   class="{{ Request::url() == route('front.vehicles.index') ? 'active' : '' }}">البحث</a>
+                <a href="{{route('front.sellers.index')}}"
+                   class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
+                <a href="/user/contact" class="{{ Request::url() == route('contact') ? 'active' : '' }}">إتصل بنا</a>
                 @auth('web')
                     @can('vehicles.create')
-                        <a href="{{route('front.vehicles.create')}}">إضافة مركبة</a>
+                        <a href="{{route('front.vehicles.create')}}"
+                           class="{{ Request::url() == route('front.vehicles.create') ? 'active' : '' }}">إضافة
+                            مركبة</a>
                     @endcan
-                    <a href="{{route('front.user.dashboard')}}" class="">حسابي</a>
+                    <a href="{{route('front.user.dashboard')}}"
+                       class="{{ Request::url() == route('front.user.dashboard') ? 'active' : '' }}">حسابي</a>
 
                     <a href="#"
                        onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
