@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SellerController;
-use App\Http\Controllers\front\UserController;
+use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\VehicleController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;

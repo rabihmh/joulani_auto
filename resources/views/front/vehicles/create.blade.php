@@ -1,15 +1,16 @@
-<x-front title="اضافة مركبة">
-    @push('css')
-        <style>
-            .made_in {
-                width: 120px;
-            }
+@push('css')
+    <style>
+        .make_in {
+            width: 120px;
+        }
 
-            .mould_in {
-                width: 80px;
-            }
-        </style>
-    @endpush
+        .mould_in {
+            width: 80px;
+        }
+    </style>
+@endpush
+<x-front title="اضافة مركبة">
+
     <x-slot:breadcrumbs>
         <div class="container">
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="/">الرئيسية</a></span>

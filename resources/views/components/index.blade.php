@@ -11,7 +11,7 @@
     <meta property="og:title" content=" جولاني أوتو - Joulani Auto">
     <meta property="og:type" content="articles">
     {{--    <meta property="og:url" content="">--}}
-    <meta property="og:image" content="/Front/img/logo.png">
+    <meta property="og:image" content="{{asset('Front/img/logo.png')}}">
     <meta name="twitter:title" content=" جولاني أوتو - Joulani Auto">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{$title}}</title>
@@ -43,21 +43,23 @@
     <div id="menu">
         <nav class="mobileMenu">
             <a href="/" class="mobile-logo">
-                <img src="{{asset('Front/images/icons/logo.ico')}}" alt="أوتو أند درايف" title="أوتو أند درايف"/>
+                <img src="{{asset('Front/images/icons/logo-mobile.png')}}" alt="أوتو أند درايف" title="أوتو أند درايف"/>
             </a>
             <a href="/" class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
             <a href="{{route('front.vehicles.index')}}"
-               class="{{ Request::url() == route('front.vehicles.index') ? 'active' : '' }}">البحث</a>
+               class="{{\Illuminate\Support\Facades\Request::is('vehicles')?'active':''}}">البحث</a>
             <a href="{{route('front.sellers.index')}}"
                class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
-            <a href="/user/contact" class="{{ Request::url() == route('contact') ? 'active' : '' }}">إتصل بنا</a>
+            <a href="/user/contact" class="{{\Illuminate\Support\Facades\Request::is('user/contact')?'active':''}}">إتصل
+                بنا</a>
             @auth('web')
                 @can('vehicles.create')
                     <a href="{{route('front.vehicles.create')}}"
-                       class="{{ Request::url() == route('front.vehicles.create') ? 'active' : '' }}">إضافة مركبة</a>
+                       class="{{\Illuminate\Support\Facades\Request::is('vehicles/create')?'active':''}}">إضافة
+                        مركبة</a>
                 @endcan
                 <a href="{{route('front.user.dashboard')}}"
-                   class="{{ Request::url() == route('front.user.dashboard') ? 'active' : '' }}">حسابي</a>
+                   class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
                 <a href="#"
                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                     تسجيل الخروج
@@ -94,18 +96,19 @@
                 <a href="/"
                    class="{{\Illuminate\Support\Facades\Request::is('/')?'active':''}}">الرئيسية</a>
                 <a href="{{route('front.vehicles.index')}}"
-                   class="{{ Request::url() == route('front.vehicles.index') ? 'active' : '' }}">البحث</a>
+                   class="{{\Illuminate\Support\Facades\Request::is('vehicles')?'active':''}}">البحث</a>
                 <a href="{{route('front.sellers.index')}}"
                    class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
-                <a href="/user/contact" class="{{ Request::url() == route('contact') ? 'active' : '' }}">إتصل بنا</a>
+                <a href="/user/contact"
+                   class="{{\Illuminate\Support\Facades\Request::is('user/contact')?'active':''}}">إتصل بنا</a>
                 @auth('web')
                     @can('vehicles.create')
                         <a href="{{route('front.vehicles.create')}}"
-                           class="{{ Request::url() == route('front.vehicles.create') ? 'active' : '' }}">إضافة
+                           class="{{\Illuminate\Support\Facades\Request::is('vehicles/create')?'active':''}}">إضافة
                             مركبة</a>
                     @endcan
                     <a href="{{route('front.user.dashboard')}}"
-                       class="{{ Request::url() == route('front.user.dashboard') ? 'active' : '' }}">حسابي</a>
+                       class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
 
                     <a href="#"
                        onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
