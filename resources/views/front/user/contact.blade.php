@@ -16,19 +16,19 @@
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 min-box text-center">
                 <i class="fas fa-fax"></i>
                 <label>
-                    +96176318226
+                    96176318226+
                 </label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 min-box text-center">
                 <i class="fab fa-whatsapp"></i>
                 <label>
-                    +96176318226
+                    96176318226+
                 </label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 min-box text-center">
                 <i class="fas fa-phone-volume"></i>
                 <label>
-                    <a href="tel:">+96106875257</a>
+                    <a href="tel:">96106875257+</a>
                 </label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 min-box text-center">
@@ -50,20 +50,24 @@
                     <p>يمكنكم طلب سيارة ضمن ميزات معينة عن طريق تعبئة الحقول في الأسفل وإرسالها إلينا , وسيتم الرد على
                         طلبكم في أسرع وقت.</p>
                 </div>
-                <form method="POST" action="">
+                <form method="POST" action="{{route('contact.send')}}">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group mb-3">
                                 <label for="exampleInputName" class="form-label">الإسم</label>
-                                <input type="name" name="name" value="" class="form-control" id="exampleInputName"
+                                <input type="name" name="name"
+                                       value="{{\Illuminate\Support\Facades\Auth::user()->name??''}}"
+                                       class="form-control" id="exampleInputName"
                                        aria-describedby="nameHelp">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group mb-3">
-                                <label for="exampleInputTel" class="form-label">رقم الهاتف</label>
-                                <input type="tel" name="number" value="" class="form-control" id="exampleInputTel"
+                                <label for="exampleInputTel" class="form-label">البريد الالكتروني</label>
+                                <input type="email" name="email"
+                                       value="{{\Illuminate\Support\Facades\Auth::user()->email??''}}"
+                                       class="form-control" id="exampleInputTel"
                                        aria-describedby="telHelp">
                             </div>
                         </div>

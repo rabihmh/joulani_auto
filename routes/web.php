@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SellerController;
 use App\Http\Controllers\Front\UserController;
@@ -24,7 +25,8 @@ Route::post('uploadsImage/{folder}/{vehicle_id?}', [ImageController::class, 'upl
 Route::put('deleteCarImage/{id}', [ImageController::class, 'edit']);
 Route::view('user/profile', 'front.users.userDashboard');
 Route::view('user/profile/edit', 'front.users.editProfile');
-Route::view('user/contact', 'front.user.contact')->name('contact');
+Route::get('contact', [ContactController::class, 'index'])->name('contact');
+Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
 Route::group(['as' => 'front.'], function () {
     Route::middleware('auth:web')->group(function () {
         Route::resource('vehicles', VehicleController::class)->except(['show', 'index']);

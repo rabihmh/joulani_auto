@@ -50,7 +50,8 @@
                class="{{\Illuminate\Support\Facades\Request::is('vehicles')?'active':''}}">البحث</a>
             <a href="{{route('front.sellers.index')}}"
                class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
-            <a href="/user/contact" class="{{\Illuminate\Support\Facades\Request::is('user/contact')?'active':''}}">إتصل
+            <a href="{{route('contact')}}"
+               class="{{\Illuminate\Support\Facades\Request::is('contact')?'active':''}}">إتصل
                 بنا</a>
             @auth('web')
                 @can('vehicles.create')
@@ -99,8 +100,8 @@
                    class="{{\Illuminate\Support\Facades\Request::is('vehicles')?'active':''}}">البحث</a>
                 <a href="{{route('front.sellers.index')}}"
                    class="{{ Request::url() == route('front.sellers.index') ? 'active' : '' }}">معارض السيارات</a>
-                <a href="/user/contact"
-                   class="{{\Illuminate\Support\Facades\Request::is('user/contact')?'active':''}}">إتصل بنا</a>
+                <a href="{{route('contact')}}"
+                   class="{{\Illuminate\Support\Facades\Request::is('contact')?'active':''}}">إتصل بنا</a>
                 @auth('web')
                     @can('vehicles.create')
                         <a href="{{route('front.vehicles.create')}}"
