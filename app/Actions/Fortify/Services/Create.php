@@ -51,6 +51,7 @@ class Create
      */
     public function createUser(array $input)
     {
+        // add transaction later
         if (isset($input['register']) && $input['register'] === 'seller') {
             Validator::make($input, $this->userValidationRules->userRule())->validate();
             Validator::make($input, $this->userValidationRules->sellerRule())->validate();

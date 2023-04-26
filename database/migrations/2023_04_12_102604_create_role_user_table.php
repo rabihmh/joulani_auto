@@ -13,8 +13,6 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('role_user', function (Blueprint $table) {
-            // authorizable_id is the id of the user
-            // authorizable_type is the type of the user (user, admin, etc)
             $table->morphs('authorizable');
             $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
 

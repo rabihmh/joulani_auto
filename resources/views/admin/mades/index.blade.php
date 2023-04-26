@@ -51,13 +51,13 @@
                                             <a href="{{route('admin.mades.edit',$made->id)}}"
                                                class="btn btn-success ml-4">Edit</a>
                                         @endcan
-                                            @can('mades.delete')
-                                        <form action="{{route('admin.mades.destroy',$made->id)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                            @endcan
+                                        @can('mades.delete')
+                                            <form action="{{route('admin.mades.destroy',$made->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty

@@ -5,9 +5,6 @@
 @section('css')
     <!--switchery css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
-    <!--sweet alert -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.css"/>
 
 @endsection
 
@@ -99,9 +96,6 @@
 @section('js')
     <!--switchery js-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
-    <!--sweet alert js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.2.0/sweetalert2.min.js"></script>
-
     <script>
         let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         elems.forEach(function (html) {

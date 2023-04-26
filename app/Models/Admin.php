@@ -16,7 +16,9 @@ class Admin extends User
         'email',
         'username',
         'phone',
-        'password'
+        'password',
+        'status',
+        'type'
     ];
     protected $hidden = [
         'password',

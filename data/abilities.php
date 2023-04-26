@@ -24,4 +24,11 @@ return [
     'sellers.create' => 'Create Sellers',
     'sellers.edit' => 'Edit Sellers',
     'sellers.delete' => 'Delete Sellers',
+
+    'admins.view' => 'View Admins',
+    'admins.create' => 'Create Admins',
+    'admins.edit' => 'Edit Admins',
+    'admins.delete' => 'Delete Admins',
+
+
 ];

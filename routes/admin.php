@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MouldController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\VehiclesController;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MadeController;
 
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => 'auth:admin'], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => ['auth:admin', 'checkActiveStatus']], function () {
     Route::view('/', 'admin.index')->name('home');
 
     Route::get('mades/trash', [MadeController::class, 'trash'])->name('mades.trash');
@@ -23,6 +24,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => '
     Route::delete('moulds/{mould}/force-delete', [MouldController::class, 'forceDelete'])->name('moulds.force-delete');
     Route::resource('mades', MadeController::class);
     Route::resource('vehicles', VehiclesController::class);
+    Route::resource('admins', AdminController::class);
+    Route::put('admins/status-update/{id}', [AdminController::class, 'updateStatus'])->name('admins.status');
     Route::put('vehicles/status-update/{id}', [VehiclesController::class, 'updateStatus'])->name('vehicles.status');
     Route::put('vehicles/set-is-special/{id}', [VehiclesController::class, 'updateSpecial'])->name('vehicles.special');
     Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);

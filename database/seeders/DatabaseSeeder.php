@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             MadesSeeder::class,
             AdminSeeder::class,
-            SellerSeeder::class
+            // SellerSeeder::class
         ]);
 
 

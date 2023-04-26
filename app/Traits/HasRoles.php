@@ -34,7 +34,7 @@ trait HasRoles
 {
     public function roles(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphToMany(Role::class, 'authorizable', 'role_user');
+        return $this->morphToMany(Role::class, 'authorizable', 'role_user')->withPivot([]);
     }
 
     public function hasAbility($ability)
