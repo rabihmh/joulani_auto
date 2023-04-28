@@ -52,9 +52,11 @@ class VehiclesController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $vehicle = Vehicle::query()->findOrFail($id);
+        $vehicle->delete();
+        return redirect()->back()->with('success', 'Vehicle Deleted Successfully');
     }
 
     public function setMainImage(Request $request, $id)

@@ -54,10 +54,12 @@
                                         <a href="{{route('admin.vehicles.show',$vehicle->id)}}"
                                            class="btn btn-primary ml-4">View</a>
                                         <a class="btn btn-success ml-4">Edit</a>
-                                        <form action="" method="POST">
+                                        <a type="submit" class="btn btn-danger"
+                                           onclick="document.getElementById('form_delete').submit()">Delete</a>
+                                        <form action="{{route('admin.vehicles.destroy',$vehicle->id)}}" method="POST"
+                                              id="form_delete">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </td>
                                     <td>

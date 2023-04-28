@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Events\VehicleCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleRequest;
 use App\Models\Made;
@@ -42,7 +43,8 @@ class VehicleController extends Controller
     public function store(VehicleRequest $request)
     {
         Gate::authorize('vehicles.create');
-        $this->vehicleService->createVehicle($request->all());
+        $vehicle = $this->vehicleService->createVehicle($request->all());
+        event(new VehicleCreated($vehicle));
         return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
