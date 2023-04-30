@@ -3,13 +3,14 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MouldController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MadeController;
 
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => ['auth:admin', 'checkActiveStatus']], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => ['auth:admin', 'checkActiveStatus', 'MarkNotificationAsRead']], function () {
     Route::view('/', 'admin.index')->name('home');
 
     Route::get('mades/trash', [MadeController::class, 'trash'])->name('mades.trash');
@@ -30,6 +31,13 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => [
     Route::put('vehicles/set-is-special/{id}', [VehiclesController::class, 'updateSpecial'])->name('vehicles.special');
     Route::put('vehicles/set_main_image/{id}', [VehiclesController::class, 'setMainImage']);
     Route::resource('roles', RolesController::class);
+    Route::prefix('notifications')
+        ->name('notifications.')
+        ->group(function () {
+            Route::get('/', [NotificationsController::class, 'index'])->name('index');
+            Route::delete('/{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
+            Route::get('/readAll', [NotificationsController::class, 'MarkAllRead'])->name('readAll');
+        });
 });
 Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');
 Route::get('admin/dashboard/made/get-moulds-child/{made_id}', [MouldController::class, 'getMouldsChild'])->name('moulds.ajax');

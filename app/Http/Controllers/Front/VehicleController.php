@@ -40,12 +40,13 @@ class VehicleController extends Controller
         return view('front.vehicles.create', compact('mades'));
     }
 
-    public function store(VehicleRequest $request)
+    public function store(Request $request)
     {
         Gate::authorize('vehicles.create');
-        $vehicle = $this->vehicleService->createVehicle($request->all());
+//        $vehicle = $this->vehicleService->createVehicle($request->all());
+        $vehicle = Vehicle::query()->where('id', 20)->first();
         event(new VehicleCreated($vehicle));
-        return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
+        //return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
     public function show($id)

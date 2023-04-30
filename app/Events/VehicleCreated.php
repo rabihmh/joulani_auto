@@ -20,7 +20,7 @@ class VehicleCreated
     /**
      * Create a new event instance.
      */
-    public function __construct(Vehicle $vehicle)
+    public function __construct( $vehicle)
     {
         $this->vehicle = $vehicle;
     }

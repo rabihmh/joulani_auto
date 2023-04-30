@@ -9,7 +9,7 @@
     @include('layouts.head')
 </head>
 
-<body class="main-body app sidebar-mini">
+<body class="main-body app sidebar-mini" data-id="{{\Illuminate\Support\Facades\Auth::id()}}">
 <!-- Loader -->
 <div id="global-loader">
     <img src="{{URL::asset('assets/img/loader.svg')}}" class="loader-img" alt="Loader">
