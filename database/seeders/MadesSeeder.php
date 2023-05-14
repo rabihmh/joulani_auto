@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Made;
 use App\Models\Mould;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
 class MadesSeeder extends Seeder
@@ -17,7 +16,7 @@ class MadesSeeder extends Seeder
      */
     public function run()
     {
-        $mades = Config::get('mades');
+        $mades = include base_path('data/mades.php');
         foreach ($mades as $name => $data) {
             $made = $this->createMade($name, $data['image']);
             $this->createMoulds($made, $data['moulds']);

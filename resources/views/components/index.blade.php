@@ -54,11 +54,14 @@
                class="{{\Illuminate\Support\Facades\Request::is('contact')?'active':''}}">إتصل
                 بنا</a>
             @auth('web')
-                @can('vehicles.create')
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type==='seller')
+                    {{--                @can('vehicles.create')--}}
                     <a href="{{route('front.vehicles.create')}}"
                        class="{{\Illuminate\Support\Facades\Request::is('vehicles/create')?'active':''}}">إضافة
                         مركبة</a>
-                @endcan
+                    {{--                @endcan--}}
+                @else
+                @endif
                 <a href="{{route('front.user.dashboard')}}"
                    class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
                 <a href="#"
@@ -71,6 +74,8 @@
             @else
                 <a href="{{route('login')}}" class="">تسجيل الدخول</a>
             @endauth
+            <a href="{{route('front.plans.index')}}"
+               class="{{\Illuminate\Support\Facades\Request::is('plans')?'active':''}}">الخطط</a>
 
         </nav>
         <div class="mobile-social mt-5 flex">
@@ -103,11 +108,15 @@
                 <a href="{{route('contact')}}"
                    class="{{\Illuminate\Support\Facades\Request::is('contact')?'active':''}}">إتصل بنا</a>
                 @auth('web')
-                    @can('vehicles.create')
+                    @if(\Illuminate\Support\Facades\Auth::user()->user_type==='seller')
+                        {{--                        @can('vehicles.create')--}}
                         <a href="{{route('front.vehicles.create')}}"
                            class="{{\Illuminate\Support\Facades\Request::is('vehicles/create')?'active':''}}">إضافة
                             مركبة</a>
-                    @endcan
+                        {{--                        @endcan--}}
+                    @else
+
+                    @endif
                     <a href="{{route('front.user.dashboard')}}"
                        class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
 
@@ -121,6 +130,9 @@
                 @else
                     <a href="{{route('login')}}" class="">تسجيل الدخول</a>
                 @endauth
+                <a href="{{route('front.plans.index')}}"
+                   class="{{\Illuminate\Support\Facades\Request::is('plans')?'active':''}}">الخطط</a>
+
             </nav>
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -134,7 +146,7 @@
     </header>
 
 
-    <div class="breadcrumbs pt-2" xmlns:v="http://rdf.data-vocabulary.org/#">
+    <div class="breadcrumbs pt-2">
         {{$breadcrumbs??""}}
     </div>
     @include('layouts.flash-message')

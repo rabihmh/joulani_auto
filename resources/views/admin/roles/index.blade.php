@@ -36,13 +36,10 @@
         </tr>
         </thead>
         <tbody>
-        @php
-            $i=0;
-        @endphp
         @forelse($roles as $role)
 
             <tr>
-                <td>{{$i+=1}}</td>
+                <td>{{$loop->iteration}}</td>
                 <td><a href="{{route('admin.roles.show',$role->id)}}">{{$role->name}}</a></td>
                 <td>{{$role->created_at}}</td>
 

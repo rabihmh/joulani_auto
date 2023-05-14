@@ -62,12 +62,7 @@ class Create
                 'password' => Hash::make($input['password']),
                 'user_type' => $input['register']
             ]);
-//            DB::table('role_user')->insert([
-//                'authorizable_type' => 'App\Models\User',
-//                'id' => $user->id,
-//                'role_id' => 3
-//            ]);
-            $user->roles()->attach(2, [
+            $user->roles()->attach(3, [
                 'authorizable_type' => get_class($user),
                 'authorizable_id' => $user->id,
             ]);

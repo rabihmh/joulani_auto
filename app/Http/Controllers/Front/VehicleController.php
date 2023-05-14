@@ -13,6 +13,7 @@ use App\Services\VehicleService;
 use App\Traits\Image\ImageDeleteTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class VehicleController extends Controller
@@ -35,7 +36,10 @@ class VehicleController extends Controller
 
     public function create()
     {
-        Gate::authorize('vehicles.create');
+        if (Auth::user()->user_type === 'buyer')
+            abort(403);
+        if (Gate::denies('vehicles.create'))
+            return redirect()->route('front.plans.index');
         $mades = Made::select(['id', 'name', 'image'])->take(18)->get();
         return view('front.vehicles.create', compact('mades'));
     }
@@ -43,15 +47,14 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('vehicles.create');
-//        $vehicle = $this->vehicleService->createVehicle($request->all());
-        $vehicle = Vehicle::query()->where('id', 20)->first();
+        $vehicle = $this->vehicleService->createVehicle($request->all());
         event(new VehicleCreated($vehicle));
-        //return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
+        return redirect()->route('front.home')->with('success', __('تم اضافة السيارة بنجاح'));
     }
 
     public function show($id)
     {
-//        Gate::authorize('vehicles.view');
+        Gate::authorize('vehicles.view');
         $vehicle = Vehicle::with('extra', 'seller:id,seller_name,seller_mobile')->findOrFail($id);
         return view('front.vehicles.show', compact('vehicle'));
     }

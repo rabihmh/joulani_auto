@@ -2,12 +2,14 @@
 
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\MadeController;
 use App\Http\Controllers\Admin\MouldController;
 use App\Http\Controllers\Admin\NotificationsController;
+use App\Http\Controllers\Admin\PaymentMethodsController;
+use App\Http\Controllers\Admin\PlansController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\MadeController;
 
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => ['auth:admin', 'checkActiveStatus', 'MarkNotificationAsRead']], function () {
@@ -23,9 +25,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => [
     Route::get('moulds/trash', [MouldController::class, 'trash'])->name('moulds.trash');
     Route::put('moulds/{mould}/restore', [MouldController::class, 'restore'])->name('moulds.restore');
     Route::delete('moulds/{mould}/force-delete', [MouldController::class, 'forceDelete'])->name('moulds.force-delete');
-    Route::resource('mades', MadeController::class);
-    Route::resource('vehicles', VehiclesController::class);
-    Route::resource('admins', AdminController::class);
+    Route::resources([
+        'mades' => MadeController::class,
+        'vehicles' => VehiclesController::class,
+        'admins' => AdminController::class,
+        'plans' => PlansController::class,
+    ]);
     Route::put('admins/status-update/{id}', [AdminController::class, 'updateStatus'])->name('admins.status');
     Route::put('vehicles/status-update/{id}', [VehiclesController::class, 'updateStatus'])->name('vehicles.status');
     Route::put('vehicles/set-is-special/{id}', [VehiclesController::class, 'updateSpecial'])->name('vehicles.special');
@@ -38,6 +43,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/dashboard', 'middleware' => [
             Route::delete('/{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
             Route::get('/readAll', [NotificationsController::class, 'MarkAllRead'])->name('readAll');
         });
+    Route::resource('payment_methods', PaymentMethodsController::class);
 });
 Route::get('admin/dashboard/made/get-moulds-id/{made_id}', [MouldController::class, 'getMouldsById'])->name('moulds.ajax');
 Route::get('admin/dashboard/made/get-moulds-child/{made_id}', [MouldController::class, 'getMouldsChild'])->name('moulds.ajax');

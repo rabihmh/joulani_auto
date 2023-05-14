@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\PlansController;
 use App\Http\Controllers\Front\SellerController;
 use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\VehicleController;
@@ -23,14 +25,18 @@ Route::get('/', [HomeController::class, 'home'])->name('front.home');
 Route::view('register/seller', 'front.auth.seller')->name('register.seller')->middleware('guest:web');
 Route::post('uploadsImage/{folder}/{vehicle_id?}', [ImageController::class, 'uploadImage'])->name('upload');
 Route::put('deleteCarImage/{id}', [ImageController::class, 'edit']);
-Route::view('user/profile', 'front.users.userDashboard');
-Route::view('user/profile/edit', 'front.users.editProfile');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::get('plans', PlansController::class)->name('front.plans.index');
 Route::group(['as' => 'front.'], function () {
     Route::middleware('auth:web')->group(function () {
         Route::resource('vehicles', VehicleController::class)->except(['show', 'index']);
+        Route::post('checkout/{plan_id}', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::get('userDashboard', [UserController::class, 'index'])->name('user.dashboard');
+        Route::get('success/{gateway}', [CheckoutController::class, 'success'])->name('success');
+        Route::get('cancel/{gateway}', function () {
+            return 'canceled';
+        })->name('cancel');
     });
 
     Route::get('vehicles', [VehicleController::class, 'index'])
@@ -41,6 +47,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
     Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
     Route::get('compare', [VehicleController::class, 'compare'])->name('vehicles.compare');
+
 });
 
 require __DIR__ . '/admin.php';
