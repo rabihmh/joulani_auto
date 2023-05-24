@@ -62,8 +62,8 @@
                     {{--                @endcan--}}
                 @else
                 @endif
-                <a href="{{route('front.user.dashboard')}}"
-                   class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
+                <a href="{{route('front.user.profile')}}"
+                   class="{{\Illuminate\Support\Facades\Request::is('userDashboard/profile')?'active':''}}">حسابي</a>
                 <a href="#"
                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                     تسجيل الخروج
@@ -117,8 +117,8 @@
                     @else
 
                     @endif
-                    <a href="{{route('front.user.dashboard')}}"
-                       class="{{\Illuminate\Support\Facades\Request::is('userDashboard')?'active':''}}">حسابي</a>
+                    <a href="{{route('front.user.profile')}}"
+                       class="{{\Illuminate\Support\Facades\Request::is('userDashboard/profile')?'active':''}}">حسابي</a>
 
                     <a href="#"
                        onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
@@ -152,7 +152,7 @@
     @include('layouts.flash-message')
     {{$slot}}
     {{$compareBox??""}}
-    <footer class="bg-blue">
+    <footer class="bg-blue" style="position:fixed;bottom: 0;left: 0; width:100%;height: 80px">
         <div class="container p-3">
             <div class="row">
                 {{--                <div class="col-lg-8 col-lg-8 col-sm-12 col-xs-12 text-center">--}}

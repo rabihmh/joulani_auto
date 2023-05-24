@@ -6,20 +6,34 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentMethod;
 use App\Models\Plan;
 use App\PaymentGateways\PaymentGatewayFactory;
+use Exception;
 use Illuminate\Http\Request;
 use Stripe\Exception\ApiErrorException;
 
 
 class CheckoutController extends Controller
 {
+
+    /**
+     * return all payment method
+     */
+    public function choose(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $plan_id = $request->get('plan_id');
+        $plan = Plan::where('id', $plan_id)->first();
+        $payment_methods = PaymentMethod::all();
+        return view('front.checkout.index', compact('payment_methods', 'plan'));
+    }
+
     /**
      * @throws ApiErrorException
-     * @throws \Exception
+     * @throws Exception
      */
-    public function checkout(Request $request, $id)
+
+    public function checkout(Request $request)
     {
-        $plan = Plan::select(['id', 'stripe_plan_id', 'paypal_plan_id'])->where('id', $id)->first();
-        $payment_method = PaymentMethod::findOrFail(1);
+        $plan = Plan::where('id', $request->post('plan_id'))->first();
+        $payment_method = PaymentMethod::where('slug', $request->post('method'))->first();
         $gateway = PaymentGatewayFactory::create($payment_method->slug, $payment_method, $plan);
         return $gateway->create($plan, $payment_method);
 
@@ -29,6 +43,10 @@ class CheckoutController extends Controller
     {
         $payment_method = PaymentMethod::where('slug', $gateway)->first();
         $gateway = PaymentGatewayFactory::create($payment_method->slug, $payment_method);
-        return $gateway->verify($request->get('session_id'));
+        $data = $payment_method->slug === 'stripe'
+            ? ['session_id' => $request->get('session_id')]
+            : $request->except('_token');
+        return $gateway->verify($data);
+
     }
 }

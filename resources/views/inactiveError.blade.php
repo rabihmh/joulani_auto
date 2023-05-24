@@ -15,7 +15,7 @@
     <!-- Main-error-wrapper -->
     <div class="main-error-wrapper  page page-h ">
         <img src="{{URL::asset('assets/img/media/500.png')}}" class="error-page" alt="error">
-        <h2>Oopps. But your account is inactive.</h2>
+        <h2>Oops.Your account is inactive.</h2>
         <h6>
             <a href="mailto:admin@joulani-auto.com">Call the admin on this email: admin@joulani-auto.com</a>
 

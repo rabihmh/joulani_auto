@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description');
             $table->float('price', 10, 2)->default(0.00)->comment('Minimum amount is $0.50 US');
-            $table->enum('billing_cycle', ['week', 'month', 'year'])->default('month');
+            $table->enum('billing_cycle', ['day', 'week', 'month', 'year'])->default('month');
             $table->integer('vehicle_limit')->default(0);
             $table->timestamps();
         });

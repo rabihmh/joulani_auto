@@ -27,27 +27,7 @@
         </div>
     </x-slot:breadcrumbs>
     <div class="container mt-2 mb-5">
-        <div class="row mb-2">
-            <div class="col-4">
-                <div class="d-grid gap-2">
-                    <a href="/userDashboard" class="btn btn-sm  btn-outline-secondary ">سياراتي</a>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="d-grid gap-2">
-                    <a href="#" class="btn btn-sm  btn-outline-secondary ">معلومات
-                        الحساب</a>
-                </div>
-            </div>
-            @can('vehicles.create')
-                <div class="col-4">
-                    <div class="d-grid gap-2">
-                        <a href="{{route('front.vehicles.create')}}" class="btn btn-sm btn-outline-secondary">إضافة
-                            مركبة</a>
-                    </div>
-                </div>
-            @endcan
-        </div>
+        <x-mini-nav/>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="bg-blue text-white">

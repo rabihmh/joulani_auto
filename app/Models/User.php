@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -45,19 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function seller()
+    public function seller(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        if ($this->user_type === "seller") {
-            return $this->hasOne(Seller::class, 'user_id');
-        }
-        return null;
+        return $this->hasOne(Seller::class, 'user_id');
     }
 
-    public function vehicles()
+    public function vehicles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        if ($this->user_type === "seller") {
-            return $this->hasMany(Vehicle::class);
-        }
-        return null;
+        return $this->hasMany(Vehicle::class);
     }
 }

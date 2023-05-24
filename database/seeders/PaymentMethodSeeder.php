@@ -36,7 +36,7 @@ class PaymentMethodSeeder extends Seeder
                 'icon' => 'uploads/payments/braintree_paypal.svg',
                 'options' => [
                     'client_id' => '',
-                    'client_secrete' => ''
+                    'client_secret' => ''
                 ]
             ]
 

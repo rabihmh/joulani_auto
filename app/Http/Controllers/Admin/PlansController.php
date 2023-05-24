@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentMethod;
 use App\Models\Plan;
-use App\Services\Stripe\Plans;
+use App\Services\Paypal\PaypalPlan;
+use App\Services\Stripe\StripePlan;
 use Illuminate\Http\Request;
 use Stripe\Exception\ApiErrorException;
 
@@ -30,18 +32,22 @@ class PlansController extends Controller
      * Store a newly created resource in storage.
      * @throws ApiErrorException
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request)
     {
-        $plans = new Plans($request->all());
-        $stripe_plan = $plans->create();
+        $paypal_method = PaymentMethod::where('slug', 'paypal')->first();
+        $stripe_method = PaymentMethod::where('slug', 'stripe')->first();
+        $paypalServicePlan = new PaypalPlan($request->all(), $paypal_method);
+        $paypalPlan = $paypalServicePlan->create();
+        $stripeServicePlan = new StripePlan($request->all(), $stripe_method);
+        $stripePlan = $stripeServicePlan->create();
         $planData = [
             'name' => $request->post('name'),
             'description' => $request->post('description'),
             'price' => $request->post('price'),
             'billing_cycle' => $request->post('billing_cycle'),
             'vehicle_limit' => $request->post('vehicle_limit'),
-            'stripe_plan_id' => $stripe_plan->id,
-        ];
+            'stripe_plan_id' => $stripePlan->id,
+            'paypal_plan_id' => $paypalPlan['id']];
 
         $plan = Plan::query()->create($planData);
 

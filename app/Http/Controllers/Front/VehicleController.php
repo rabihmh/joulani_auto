@@ -10,7 +10,7 @@ use App\Models\Mould;
 use App\Models\Vehicle;
 use App\Queries\VehicleQuery;
 use App\Services\VehicleService;
-use App\Traits\Image\ImageDeleteTrait;
+use App\Traits\Image\DeleteAllImageTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Gate;
 
 class VehicleController extends Controller
 {
-    use ImageDeleteTrait;
+    use DeleteAllImageTrait;
 
     private VehicleService $vehicleService;
 
@@ -71,7 +71,7 @@ class VehicleController extends Controller
     {
         Gate::authorize('vehicles.edit');
         $this->vehicleService->updateVehicle($request->all(), $id);
-        return redirect()->route('front.user.dashboard')->with('success', __('تم تعديل  بنجاح'));
+        return redirect()->route('front.user.vehicles')->with('success', __('تم تعديل  بنجاح'));
     }
 
     public function destroy($id)

@@ -793,9 +793,10 @@
                                 </ul>
                             </div>
                             <footer class="pricing-footer">
-                                <form action="{{route('front.checkout',$plan->id)}}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="select" href="">Checkout</button>
+                                <form action="{{route('front.checkout.index')}}" method="GET">
+
+                                    <input type="hidden" name="plan_id" value="{{$plan->id}}">
+                                    <button type="submit" class="select" href="">اختر</button>
                                 </form>
                             </footer>
                         </li>

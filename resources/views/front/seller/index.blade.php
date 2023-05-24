@@ -53,7 +53,7 @@
                             </div>
                             <div class="mb-1">
                                 <i class="fa fa-phone" aria-hidden="true"></i>
-                                <a href="tel:{{$seller->seller_mobile}}">{{$seller->seller_mobile}}</a>
+                                <a dir="ltr" href="tel:{{$seller->seller_mobile}}">{{$seller->seller_mobile}}</a>
                             </div>
                             <div class="car-bx-counter">
                                 <i class="fas fa-car"></i>

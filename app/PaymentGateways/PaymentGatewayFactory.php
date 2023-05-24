@@ -11,12 +11,12 @@ class PaymentGatewayFactory
 {
     /**
      * @param string $name
+     * @param PaymentMethod|null $method
      * @param Plan|null $plan
-     * @param PaymentMethod $method
      * @return PaymentGateway
      * @throws Exception
      */
-    public static function create(string $name, PaymentMethod $method, ?Plan $plan = null): PaymentGateway
+    public static function create(string $name, ?PaymentMethod $method = null, ?Plan $plan = null): PaymentGateway
     {
         $class = 'App\PaymentGateways\\' . Str::studly($name);
         try {

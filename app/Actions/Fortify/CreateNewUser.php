@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Actions\Fortify\Services\Create;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
@@ -15,6 +16,9 @@ class CreateNewUser implements CreatesNewUsers
         $this->create = $create;
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function create(array $input)
     {
         if (Config::get('fortify.guard') == 'admin') {

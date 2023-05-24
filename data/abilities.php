@@ -30,5 +30,10 @@ return [
     'admins.edit' => 'Edit Admins',
     'admins.delete' => 'Delete Admins',
 
+    'roles.view' => 'View Roles',
+    'roles.create' => 'Create Roles',
+    'roles.edit' => 'Edit Roles',
+    'roles.delete' => 'Delete Roles',
+
 
 ];

@@ -1,3 +1,5 @@
+@props(['selectedRegionId' => null])
+
 <tr>
     <td>المنطقة</td>
     <td>
@@ -8,7 +10,8 @@
             <option value="">الرجاء إختيار المدينة</option>
 
             @foreach($regions as $region)
-                <option value="{{$region->id}}">{{$region->name}}</option>
+                <option value="{{$region->id}}" @if($region->id == $selectedRegionId) selected @endif
+                >{{$region->name}}</option>
             @endforeach
         </select>
     </td>

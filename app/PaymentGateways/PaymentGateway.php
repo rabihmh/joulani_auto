@@ -7,11 +7,11 @@ use App\Models\Plan;
 
 interface PaymentGateway
 {
-    public function __construct(PaymentMethod $method, ?Plan $plan,);
+    public function __construct(?PaymentMethod $method, ?Plan $plan,);
 
     public function create();
 
-    public function verify($session_id);
+    public function verify($data);
 
     public function formOptions(): array;
 }

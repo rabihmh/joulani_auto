@@ -60,6 +60,8 @@
                                 <div class="form-group mg-b-0 mt-2">
                                     <label class="form-label">Cycle : <span class="tx-danger">*</span></label>
                                     <select class="form-control" name="billing_cycle">
+                                        <option value="day">Day</option>
+                                        <option value="week">Week</option>
                                         <option value="month">Month</option>
                                         <option value="year">Year
                                         </option>

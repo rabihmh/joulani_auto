@@ -2,18 +2,24 @@
 
 namespace App\Services\Stripe;
 
+use App\Models\PaymentMethod;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Plan;
 use Stripe\Stripe;
 use Stripe\StripeClient;
 
-class Plans
+class StripePlan
 {
     public array $data;
+    public PaymentMethod $method;
+    private string $secret_key;
 
-    public function __construct(array $data)
+
+    public function __construct(array $data, PaymentMethod $method)
     {
         $this->data = $data;
+        $this->method = $method;
+        $this->secret_key = $this->method->options['secret_key'];
     }
 
     /**
@@ -21,7 +27,7 @@ class Plans
      */
     public function create(): Plan
     {
-        $apiKey = config('services.stripe.secret_key');
+        $apiKey = $this->secret_key;
         Stripe::setApiKey($apiKey);
         $stripe = new StripeClient(['api_key' => $apiKey]);
         $product = $this->createProduct($stripe);
@@ -44,7 +50,7 @@ class Plans
         return $stripe->plans->create([
             'amount' => $this->data['price'] * 100,
             'currency' => 'usd',
-            'interval' => 'month',
+            'interval' => $this->data['billing_cycle'],
             'product' => $product->id,
             'nickname' => $this->data['name']
         ]);

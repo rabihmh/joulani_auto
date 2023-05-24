@@ -16,8 +16,9 @@
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <div class="mb-2 seller-dt hvr-sweep-to-left"><label>العنوان</label>{{$seller->seller_address}}
                     </div>
-                    <div class="mb-2 seller-dt hvr-sweep-to-left"><label>رقم هاتف المعرض</label><a
-                            href="tel:{{$seller->seller_mobile}}">{{$seller->seller_mobile}}</a></div>
+                    <div class="mb-2 seller-dt hvr-sweep-to-left"><label>رقم هاتف المعرض</label><a dir="ltr"
+                                                                                                   href="tel:{{$seller->seller_mobile}}">{{$seller->seller_mobile}}</a>
+                    </div>
                     <div class="mb-2 seller-dt hvr-sweep-to-left"><label>مشاركة</label>
                         <div class="social_share mt-2">
                             <a href="" class="facebook"><i class="fab fa-facebook"></i></a>

@@ -23,7 +23,7 @@ class UserValidationRules
                 Rule::unique(Admin::class),
             ],
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            //'password' => $this->passwordRules(),
+            'password' => $this->passwordRules(),
         ];
     }
 
@@ -38,16 +38,4 @@ class UserValidationRules
         ];
     }
 }
-//[
-//    'name' => ['required', 'string', 'max:255'],
-//    'email' => [
-//        'required',
-//        'string',
-//        'email',
-//        'max:255',
-//        Rule::unique(User::class),
-//        Rule::unique(Admin::class),
-//    ],
-//    'phone' => ['required', 'string'],
-//    'password' => $this->passwordRules(),
-//]
+

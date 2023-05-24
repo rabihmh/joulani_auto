@@ -31,9 +31,14 @@ Route::get('plans', PlansController::class)->name('front.plans.index');
 Route::group(['as' => 'front.'], function () {
     Route::middleware('auth:web')->group(function () {
         Route::resource('vehicles', VehicleController::class)->except(['show', 'index']);
-        Route::post('checkout/{plan_id}', [CheckoutController::class, 'checkout'])->name('checkout');
-        Route::get('userDashboard', [UserController::class, 'index'])->name('user.dashboard');
-        Route::get('success/{gateway}', [CheckoutController::class, 'success'])->name('success');
+        Route::get('checkout', [CheckoutController::class, 'choose'])->name('checkout.index');
+        Route::post('checkout/pay', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::group(['prefix' => 'userDashboard', 'as' => 'user.'], function () {
+            Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+            Route::get('/vehicles', [UserController::class, 'vehicles'])->name('vehicles');
+            Route::get('/subscriptions', [UserController::class, 'subscriptions'])->name('subscriptions');
+        });
+        Route::match(['get', 'post'], 'success/{gateway}', [CheckoutController::class, 'success'])->name('success');
         Route::get('cancel/{gateway}', function () {
             return 'canceled';
         })->name('cancel');

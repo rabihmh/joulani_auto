@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             MadesSeeder::class,
             AdminSeeder::class,
             SellerSeeder::class,
-            PaymentMethodSeeder::class
+            PaymentMethodSeeder::class,
+            RoleSeeder::class,
         ]);
 
 

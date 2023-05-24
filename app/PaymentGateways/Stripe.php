@@ -18,13 +18,14 @@ use Stripe\Invoice;
 use Stripe\Plan as StripePlan;
 use Stripe\Stripe as StripeApi;
 use Stripe\Subscription as StripeSubscription;
+use Symfony\Component\HttpFoundation\Response;
 
 class Stripe implements PaymentGateway
 {
     public ?Plan $plan;
-    public PaymentMethod $method;
+    public ?PaymentMethod $method;
 
-    public function __construct($method, ?Plan $plan,)
+    public function __construct(?PaymentMethod $method, ?Plan $plan,)
     {
         $this->plan = $plan;
         $this->method = $method;
@@ -33,7 +34,7 @@ class Stripe implements PaymentGateway
     /**
      * @throws ApiErrorException
      */
-    public function create(): bool|string|\Illuminate\Http\RedirectResponse
+    public function create(): bool|\Illuminate\Http\JsonResponse|string
     {
         $apiKey = $this->method->options['secret_key'];
         StripeApi::setApiKey($apiKey);
@@ -52,7 +53,8 @@ class Stripe implements PaymentGateway
             ]);
             $this->createOrder($checkout_session);
             $this->createPayment($checkout_session);
-            return redirect()->away($checkout_session->url);
+            return response()->json(['message' => 'Order Created', 'link' => $checkout_session->url, Response::HTTP_OK]);
+            // return redirect()->away($checkout_session->url);
         } catch (Error $e) {
             http_response_code(500);
             return json_encode(['error' => $e->getMessage()]);
@@ -63,8 +65,9 @@ class Stripe implements PaymentGateway
     /**
      * @throws ApiErrorException
      */
-    public function verify($session_id)
+    public function verify($data)
     {
+        $session_id = $data['session_id'];
         StripeApi::setApiKey($this->method->options['secret_key']);
 
         try {
@@ -192,7 +195,7 @@ class Stripe implements PaymentGateway
     private function makeUserSubscriber($user)
     {
         $role_id = Role::query()->select('id')->where('name', 'subscriber')->first();
-        $user->roles()->attach($role_id, [
+        $user->roles()->sync($role_id, [
             'authorizable_type' => get_class($user),
             'authorizable_id' => $user->id,
         ]);
