@@ -6,8 +6,8 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\Plan;
-use App\Models\Role;
 use App\Models\Subscription;
+use App\Traits\AttachRole;
 use Carbon\Carbon;
 use Error;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Stripe implements PaymentGateway
 {
+    use AttachRole;
+
     public ?Plan $plan;
     public ?PaymentMethod $method;
 
@@ -91,7 +93,7 @@ class Stripe implements PaymentGateway
 
             $this->updateOrderAndPayment($order, $payment, $session->payment_status, $invoice);
             $this->createSubscription($invoice);
-            $this->makeUserSubscriber($user);
+            $this->attach($user, 'subscriber');
             DB::commit();
             return redirect()->route('front.home')->with('success', 'تم تفعيل الاشتراك بنجاح');
         } catch (\Exception $e) {
@@ -118,6 +120,13 @@ class Stripe implements PaymentGateway
                 'required' => true,
                 'validation' => 'required|string|max:255'
             ],
+            'webhook_secret_key' => [
+                'type' => 'text',
+                'label' => 'Webhook Secret Key',
+                'placeholder' => 'Webhook Secret Key',
+                'required' => true,
+                'validation' => 'required|string|max:255'
+            ]
         ];
     }
 
@@ -184,20 +193,12 @@ class Stripe implements PaymentGateway
         Subscription::create([
             'user_id' => Auth::id(),
             'plan_id' => $plan->id,
+            'payment_method' => $this->method->id,
             'status' => $subscription->status,
             'invoice_id' => $invoice->id,
             'subscription_id' => $subscription->id,
             'start_date' => $startDate,
             'end_date' => $endDate,
-        ]);
-    }
-
-    private function makeUserSubscriber($user)
-    {
-        $role_id = Role::query()->select('id')->where('name', 'subscriber')->first();
-        $user->roles()->sync($role_id, [
-            'authorizable_type' => get_class($user),
-            'authorizable_id' => $user->id,
         ]);
     }
 

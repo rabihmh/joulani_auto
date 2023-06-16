@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete();
+            $table->foreignId('payment_method')->after('plan_id')->constrained('payment_methods')->nullOnDelete();
             $table->enum('status', ['active', 'expired', 'canceled'])->default('active');
             $table->string('invoice_id')->nullable()->unique();
             $table->string('subscription_id')->nullable()->unique();

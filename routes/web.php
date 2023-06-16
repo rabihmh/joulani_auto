@@ -5,8 +5,10 @@ use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\PlansController;
 use App\Http\Controllers\Front\SellerController;
+use App\Http\Controllers\Front\SubscriptionController;
 use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\VehicleController;
+use App\Http\Controllers\Front\WebhooksController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +44,7 @@ Route::group(['as' => 'front.'], function () {
         Route::get('cancel/{gateway}', function () {
             return 'canceled';
         })->name('cancel');
+        Route::delete('subscription/{subscription_id}/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
     });
 
     Route::get('vehicles', [VehicleController::class, 'index'])
@@ -52,7 +55,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
     Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
     Route::get('compare', [VehicleController::class, 'compare'])->name('vehicles.compare');
-
+    Route::post('webhooks/{gateway}', WebhooksController::class)->name('webhook');
 });
 
 require __DIR__ . '/admin.php';

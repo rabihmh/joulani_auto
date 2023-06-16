@@ -7,8 +7,8 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\Plan;
-use App\Models\Role;
 use App\Models\Subscription;
+use App\Traits\AttachRole;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Paypal implements PaymentGateway
 {
+    use AttachRole;
 
     public ?Plan $plan;
     public ?PaymentMethod $method;
@@ -77,7 +78,7 @@ class Paypal implements PaymentGateway
             $user = $order->user;
             $this->updateOrderAndPaymentModel($order, $subscription_details, $payment, $transaction_id);
             $this->createSubscription($subscription_details);
-            $this->makeUserSubscriber($user);
+            $this->attach($user, 'subscriber');
             DB::commit();
             return redirect()->route('front.home')->with('success', 'تم تفعيل الاشتراك بنجاح');
         } catch (\Exception $exception) {
@@ -209,6 +210,7 @@ class Paypal implements PaymentGateway
         Subscription::create([
             'user_id' => Auth::id(),
             'plan_id' => $data['plan_model_id'],
+            'payment_method' => $this->method->id,
             'status' => 'active',
             'subscription_id' => $data['subscription_id'],
             'start_date' => $startDateTime,
@@ -216,15 +218,6 @@ class Paypal implements PaymentGateway
         ]);
     }
 
-    private function makeUserSubscriber($user)
-
-    {
-        $role_id = Role::query()->select('id')->where('name', 'subscriber')->first();
-        $user->roles()->sync($role_id, [
-            'authorizable_type' => get_class($user),
-            'authorizable_id' => $user->id,
-        ]);
-    }
 
 }
 

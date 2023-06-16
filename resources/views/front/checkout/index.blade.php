@@ -173,7 +173,7 @@
                         if (contentType.indexOf("json") !== -1) {
                             var responseData = JSON.parse(xhr.responseText);
                             if (responseData && responseData.link) {
-                                window.open(responseData.link, '_blank');
+                                window.location = responseData.link;
                             } else {
                                 alert('Invalid response');
                             }

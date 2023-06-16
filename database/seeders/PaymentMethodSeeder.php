@@ -21,8 +21,9 @@ class PaymentMethodSeeder extends Seeder
                 'status' => 'active',
                 'icon' => 'uploads/payments/processout.svg',
                 'options' => [
-                    'publishable_key' => config('services.stripe.publishable_key'),
-                    'secret_key' => config('services.stripe.secret_key')
+                    'publishable_key' => '',
+                    'secret_key' => '',
+                    'webhook_secret_key' => ''
                 ]
             ],
 

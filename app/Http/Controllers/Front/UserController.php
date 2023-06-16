@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Region;
+use App\Models\Subscription;
 use App\Models\Vehicle;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function profile()
+    public function profile(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $user = Auth::user()->load('seller');
         $region = null;
@@ -26,54 +26,10 @@ class UserController extends Controller
         return view('front.user.userDashboard', compact('vehicles'));
     }
 
-    public function subscriptions()
+    public function subscriptions(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('front.user.subscriptions');
-    }
-//
-//    public function editProfile(Request $request)
-//    {
-//        return $request->all();
-//
-//    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $subscriptions = Subscription::query()->with(['plan', 'method'])->where('user_id', Auth::id())->orderBy('id','Desc')->get();
+        return view('front.user.subscriptions', compact('subscriptions'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
