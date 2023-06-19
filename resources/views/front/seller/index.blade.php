@@ -82,8 +82,6 @@
             function search() {
                 var sellerTitle = $("#sellerTitle").val();
                 var sellerCity = $("#sellerCity").val();
-
-                console.log(sellerTitle, sellerCity);
                 $.ajax({
                     url: '/getSellers?title=' + sellerTitle + '&city=' + sellerCity,
                     type: 'get',

@@ -21,7 +21,6 @@ class Vehicle extends Model
 //        'year_of_product' => 'date',
     ];
 
-    //Accessors
     public function getVehicleNameAttribute(): string
     {
         return Cache::remember("vehicle_name_" . $this->id, 120, function () {
@@ -33,7 +32,7 @@ class Vehicle extends Model
 
     protected static function booted()
     {
-        if (Auth::guard('admin')->check()){
+        if (Auth::guard('admin')->check()) {
             return;
         }
         static::addGlobalScope('active', function (Builder $builder) {

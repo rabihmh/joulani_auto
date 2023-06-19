@@ -152,7 +152,7 @@
     @include('layouts.flash-message')
     {{$slot}}
     {{$compareBox??""}}
-    <footer class="bg-blue" style="position:fixed;bottom: 0;left: 0; width:100%;height: 80px">
+    <footer class="bg-blue">
         <div class="container p-3">
             <div class="row">
                 {{--                <div class="col-lg-8 col-lg-8 col-sm-12 col-xs-12 text-center">--}}

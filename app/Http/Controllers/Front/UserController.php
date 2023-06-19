@@ -19,6 +19,11 @@ class UserController extends Controller
         return view('front.user.editProfile', compact('user', 'region'));
     }
 
+    public function settings(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('front.user.settings');
+    }
+
     public function vehicles(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $user_id = Auth::id();
@@ -28,7 +33,7 @@ class UserController extends Controller
 
     public function subscriptions(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $subscriptions = Subscription::query()->with(['plan', 'method'])->where('user_id', Auth::id())->orderBy('id','Desc')->get();
+        $subscriptions = Subscription::query()->with(['plan', 'method'])->where('user_id', Auth::id())->orderBy('id', 'Desc')->get();
         return view('front.user.subscriptions', compact('subscriptions'));
     }
 

@@ -1,4 +1,37 @@
 <x-front title="{{$seller->seller_name}}">
+    @push('css')
+        <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
+        <style>
+            /* Style for fullscreen button */
+            .fullscreen-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 1000;
+                padding: 5px;
+                cursor: pointer;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+            }
+
+            .fullscreen-button::before {
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                content: "\f065";
+            }
+
+            /* Style for fullscreen map */
+            .fullscreen-map {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+            }
+        </style>
+    @endpush
     <x-slot:breadcrumbs>
         <div class="container">
             <span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="/">الرئيسية</a></span>
@@ -28,29 +61,10 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <div class="mb-2 seller-dt">
+                    <div class="mb-2 seller-dt" id="map-container">
                         <label>الموقع</label>
                         <div>
                             <div id="my_map_add" style="width:100%;height:300px;"></div>
-
-                            <script type="text/javascript">
-                                function my_map_add() {
-                                    var myMapCenter = new google.maps.LatLng(21.551168942995, 39.170072417461);
-                                    var myMapProp = {
-                                        center: myMapCenter,
-                                        zoom: 12,
-                                        scrollwheel: false,
-                                        draggable: false,
-                                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                                    };
-                                    var map = new google.maps.Map(document.getElementById("my_map_add"), myMapProp);
-                                    var marker = new google.maps.Marker({position: myMapCenter});
-                                    marker.setMap(map);
-                                }
-                            </script>
-
-                            <script
-                                src="https://maps.googleapis.com/maps/api/js?key=your_key&callback=my_map_add"></script>
                         </div>
                     </div>
                 </div>
@@ -127,4 +141,114 @@
             <a href="#" id="hrefCompare" class="btn btn-danger btn-sm float-start ml-2 mt-2">مقارنة</a>
         </div>
     </x-slot:compareBox>
+    @push('js')
+        <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+        <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+        <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+        <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+        <script>
+            const locationData = {!! json_encode($seller->location_data) !!};
+            if (locationData && locationData.lng !== null && locationData.lat !== null) {
+                const lat = locationData.lat;
+                const lng = locationData.lng;
+
+                function addMarkerToMap(map) {
+                    const icon = new H.map.Icon('{{asset('Front/images/maker.svg')}}');
+                    let sellerLocation = new H.map.Marker({lat: lat, lng: lng}, {icon: icon});
+
+                    map.addObject(sellerLocation);
+                }
+
+                const platform = new H.service.Platform({
+                    apikey: 'o_Ty0FImxO7Iwwebl9K46iS6xOt7ocvrHeHtt15urgA'
+                });
+                const defaultLayers = platform.createDefaultLayers();
+
+                const map = new H.Map(document.getElementById('my_map_add'),
+                    defaultLayers.vector.normal.map, {
+                        center: {lat: lat, lng: lng},
+                        zoom: 12,
+                        pixelRatio: window.devicePixelRatio || 1
+                    });
+                window.addEventListener('resize', () => map.getViewPort().resize());
+                var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+                var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+
+                var fullscreenButton = document.createElement('i');
+                fullscreenButton.className = 'fullscreen-button';
+                map.getElement().appendChild(fullscreenButton);
+
+                fullscreenButton.addEventListener('click', function () {
+                    var mapElement = map.getElement();
+                    if (!document.fullscreenElement) {
+                        if (mapElement.requestFullscreen) {
+                            mapElement.requestFullscreen();
+                        } else if (mapElement.mozRequestFullScreen) {
+                            mapElement.mozRequestFullScreen();
+                        } else if (mapElement.webkitRequestFullscreen) {
+                            mapElement.webkitRequestFullscreen();
+                        } else if (mapElement.msRequestFullscreen) {
+                            mapElement.msRequestFullscreen();
+                        }
+                        mapElement.classList.add('fullscreen-map');
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        }
+                        mapElement.classList.remove('fullscreen-map');
+                    }
+                });
+
+                window.onload = function () {
+                    addMarkerToMap(map);
+                }
+            } else {
+                document.getElementById('map-container').style.display = 'none';
+            }
+        </script>
+    @endpush
 </x-front>
+{{--
+ <script>
+
+            /**
+             * Adds markers to the map highlighting the locations of the captials of
+             * France, Italy, Germany, Spain and the United Kingdom.
+             *
+             * @param  {H.Map} map      A HERE Map instance within the application
+             */
+            function addMarkersToMap(map) {
+                var sellerLocation = new H.map.Marker({lat:34.5724474 , lng:36.0142976 });
+                map.addObject(sellerLocation);
+
+            }
+
+            var platform = new H.service.Platform({
+                apikey: 'o_Ty0FImxO7Iwwebl9K46iS6xOt7ocvrHeHtt15urgA'
+            });
+            var defaultLayers = platform.createDefaultLayers();
+
+            var map = new H.Map(document.getElementById('my_map_add'),
+                defaultLayers.vector.normal.map, {
+                    center: {lat: 34.5724474, lng: 36.0142976},
+                    zoom: 12,
+                    pixelRatio: window.devicePixelRatio || 1
+                });
+            window.addEventListener('resize', () => map.getViewPort().resize());
+            var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+            var ui = H.ui.UI.createDefault(map, defaultLayers);
+            window.onload = function () {
+                addMarkersToMap(map);
+            }
+
+        </script>
+--}}

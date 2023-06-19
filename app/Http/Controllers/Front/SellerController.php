@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SellerController extends Controller
@@ -43,24 +44,13 @@ class SellerController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
+
     public function show($id)
     {
         $seller = Seller::query()->with('vehicles')->findOrFail($id);
         return view('front.seller.show', compact('seller'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -112,5 +102,21 @@ class SellerController extends Controller
             ->get();
 
         return response()->json($sellers, Response::HTTP_OK);
+    }
+
+    public function addLocationSeller(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $seller = Auth::user()->seller;
+        $lat = $request->post('latitude');
+        $long = $request->post('longitude');
+        $seller->update([
+            'location' => DB::raw("POINT({$long}, {$lat})")
+        ]);
+        $seller->save();
+
+        return response()->json([
+            'success' => 'تم اضافة بنجاح'
+        ]);
+
     }
 }

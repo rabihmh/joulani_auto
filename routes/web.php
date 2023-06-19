@@ -37,9 +37,11 @@ Route::group(['as' => 'front.'], function () {
         Route::post('checkout/pay', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::group(['prefix' => 'userDashboard', 'as' => 'user.'], function () {
             Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+            Route::get('/settings', [UserController::class, 'settings'])->name('settings');
             Route::get('/vehicles', [UserController::class, 'vehicles'])->name('vehicles');
             Route::get('/subscriptions', [UserController::class, 'subscriptions'])->name('subscriptions');
         });
+        Route::post('add-location', [SellerController::class, 'addLocationSeller'])->name('sellers.location');
         Route::match(['get', 'post'], 'success/{gateway}', [CheckoutController::class, 'success'])->name('success');
         Route::get('cancel/{gateway}', function () {
             return 'canceled';
@@ -53,6 +55,7 @@ Route::group(['as' => 'front.'], function () {
         ->name('vehicles.show');
     Route::resource('sellers', SellerController::class);
     Route::get('getSellers', [SellerController::class, 'getSellers'])->name('sellers.ajax');
+    Route::post('add-location', [SellerController::class, 'addLocationSeller'])->name('sellers.location');
     Route::get('search', [VehicleController::class, 'search'])->name('vehicles.search.ajax');
     Route::get('compare', [VehicleController::class, 'compare'])->name('vehicles.compare');
     Route::post('webhooks/{gateway}', WebhooksController::class)->name('webhook');
