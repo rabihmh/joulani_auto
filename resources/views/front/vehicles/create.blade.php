@@ -1051,7 +1051,7 @@
                                     console.log(v);
                                     models += '' +
                                         '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 text-center mb-2 carMake" data-id="' + v.id + '">' +
-                                        '<img src="/images/logos/' + v.logo + '" height="' + v.web_height + '" width="' + v.web_width + '"/>' +
+                                        '<img src="{{ asset('storage') }}/' + v.image + '" height="50" width="50"/>' +
                                         '<div>' + v.name + '</div>' +
                                         '</div>' +
                                         '';

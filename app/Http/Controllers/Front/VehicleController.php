@@ -12,6 +12,7 @@ use App\Queries\VehicleQuery;
 use App\Services\VehicleService;
 use App\Traits\Image\DeleteAllImageTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -100,5 +101,10 @@ class VehicleController extends Controller
         } catch (ModelNotFoundException $e) {
             return back()->with('لم يتم العثور على المركبة');
         }
+    }
+
+    public function getAllMake(): JsonResponse
+    {
+        return response()->json(Made::all(), 200);
     }
 }

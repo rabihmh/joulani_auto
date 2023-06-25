@@ -33,6 +33,7 @@ Route::get('plans', PlansController::class)->name('front.plans.index');
 Route::group(['as' => 'front.'], function () {
     Route::middleware('auth:web')->group(function () {
         Route::resource('vehicles', VehicleController::class)->except(['show', 'index']);
+        Route::get('getAllMake', [VehicleController::class, 'getAllMake']);
         Route::get('checkout', [CheckoutController::class, 'choose'])->name('checkout.index');
         Route::post('checkout/pay', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::group(['prefix' => 'userDashboard', 'as' => 'user.'], function () {

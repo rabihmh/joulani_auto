@@ -21,7 +21,8 @@ class UserController extends Controller
 
     public function settings(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('front.user.settings');
+        $user = Auth::user();
+        return view('front.user.settings', compact('user'));
     }
 
     public function vehicles(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
